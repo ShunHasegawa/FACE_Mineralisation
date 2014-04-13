@@ -1,31 +1,29 @@
 rm(list=ls(all=TRUE))
-#setwd("C:\\Users\\sh3410\\SkyDrive\\Documents\\PhD.HIE\\R\\Mineralisation\\Data")
 
-#####
 #library
-#####
 source("functions/list_library.R")
-library(xlsx)
 (.packages())
-#####
+
 
 source("functions/function.R")
 
-result<-read.csv("mineralisation.kgbais.csv",colClasses=c("ring"="factor","plot"="factor","time"="factor"))
-summary(result)
-result<-result[complete.cases(result),]
+result<-read.csv("Data/mineralisation.kgbais.csv",colClasses=c("ring"="factor","plot"="factor","time"="factor"))
+result <- result[complete.cases(result), ]
 result<-droplevels(result)
+summary(result)
 
 #reorder day factors
 levels(result$day)
-result$day <- factor(result$day, levels(result$day) [c(3,4,2,1)])
+result$day <- factor(result$day, 
+                     levels = c("Jul2012", "Oct2012", "Jan2013", "Apr2013", "Jul2013", "Oct2013", "Jan2014"))
+
 
 #remove coverage column
 result <- result[,-5]
 names(result)
 
 # save
-save(result, file = "output/data/mineralisation.R")
+save(result, file = "output/data/mineralisation.Rdata")
 
 #summary table
 ####
@@ -34,35 +32,23 @@ contents(result)
 
 #ring mean
 names(result)
-ring.mean<-with(result,aggregate(result[c("nitrification","n.min","p.min")],list(time=time,day=day,ring=ring,co2=co2),mean))
-contents(ring.mean)
-ring.mean
-write.table(ring.mean,"mineralisation.ring.mean.(kg.soil_basis).csv")
+ring.mean <- ddply(result, .(time, day, ring, co2), summarise, 
+                   nitrification = mean(nitrification, na.rm = TRUE),
+                   n.min = mean(n.min, na.rm = TRUE),
+                   p.min = mean(p.min, na.rm = TRUE))
+write.table(ring.mean,"output//data/mineralisation.ring.mean.(kg.soil_basis).csv")
 
 #co2 mean
 names(ring.mean)
-treat.mean<-summaryBy(nitrification+n.min+p.min~time+day+co2,FUN=c(mean,function(x) ci(x)[4],length),data=ring.mean,
-                      fun.names=c("mean","SE","Sample_size"))
-treat.mean
-write.table(treat.mean,"mineralisation.co2.mean&SE(kg.soil_basis).csv",sep=",")
+treat.mean<-summaryBy(nitrification + n.min + p.min ~ time + day + co2, 
+                      FUN = c(mean, function(x) ci(x)[4], length),
+                      data = ring.mean,
+                      fun.names = c("mean", "SE", "Sample_size"))
+write.table(treat.mean,"output//data/mineralisation.co2.mean&SE(kg.soil_basis).csv", sep=",")
 
 #save summary tables as excel
 source("functions/Mineralisation_summary_excel_table.R")
 
-
-#re-structure for excel graph
-#melt all response variables into one column
-#ml<-melt(treat.mean,id.var=c("time","day","co2"))
-#head(ml)
-#cast
-#tr.mean.cs<-cast(ml,time+day~co2+variable)
-#head(tr.mean.cs)
-#re-order columns
-#vals<-names(tr.mean.cs)
-#tr.mean.cs<-tr.mean.cs[,c(1,2,order(vals[3:length(vals)])+2)]
-#tr.mean.cs
-#save as csv
-#write.csv(tr.mean.cs,"Mineralisation.CO2.mean(kg.soil_basis).excel.graph.table.csv")
 
 #analysis
 
