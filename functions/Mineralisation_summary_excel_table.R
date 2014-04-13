@@ -30,4 +30,4 @@ for (i in 1:3){
 }
 
 #save file
-saveWorkbook(wb,"table/FACE_Mineralisation.rates.xlsx")
+saveWorkbook(wb,"output/table/FACE_Mineralisation.rates.xlsx")
