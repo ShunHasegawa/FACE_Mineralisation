@@ -30,4 +30,4 @@ for (i in 1:3){
 }
 
 #save file
-saveWorkbook(wb,"table/FACE_Extractable.Nutrients.xlsx")
+saveWorkbook(wb,"output/table/FACE_Extractable.Nutrients.xlsx")
