@@ -105,7 +105,6 @@ m1.smpl$anova.reml
 ####################
 # p mineralisation #
 ####################
-
 range(result$p.min)
 
 bxplts("p.min", ofst= 0.02, data = result)
