@@ -1,20 +1,18 @@
 rm(list=ls(all=TRUE))
 
-#####
-#library
-#####
+# library
 source("functions/list_library.R")
 (.packages())
-#####
+
 
 # function
 source("functions/function.R")
 
-
 # model simplification
 source("functions/model_simplification.R")
 
-result <- read.csv("Data//extractable.csv", header=T, colClasses=c("ring"="factor","plot"="factor","time"="factor"))
+result <- read.csv("Data//extractable.csv", header=T, colClasses=c("ring"="factor","plot"="factor","time"="factor", 
+                                                                   "coverage" = "NULL"))
 result <- result[complete.cases(result), ]
 result <- droplevels(result)
 summary(result)
@@ -22,23 +20,14 @@ summary(result)
 #format date
 result$day <- as.Date(dmy(as.character(result$day)))
 
-#remove coverage column
-names(result)
-result <- result[,-5]
-
 # save
-save(result, file = "output/data/extractable.RData")
-?save
+save(result, file = "output/data/extractable.Rdata")
 
-#summary table
-#####
-names(result)
-summary(result)
 
-#ring mean
+# summary table
+# ring mean
 ring.mean<-with(result,aggregate(result[,6:8],list(time=time,day=day,ring=ring,co2=co2),mean))
-contents(ring.mean)
-summary(ring.mean)
+
 write.table(ring.mean,"extractable.ring.mean.csv",sep=",")
 
 #co2 mean
