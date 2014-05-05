@@ -16,9 +16,13 @@ TrtSmmryTbl <- dlply(RngMean, .(variable), function(x) CreateTable(x, fac = "co2
 ## create xcel workbook ##
 wb <- createWorkbook()
 
-# worksheet for rowdata
+# worksheet for rowdata and rowdata without outlier
 sheet <- createSheet(wb,sheetName="row_data")
 addDataFrame(mine, sheet, showNA=TRUE, row.names=FALSE, characterNA="NA")
+
+sheet <- createSheet(wb,sheetName="row_data_withoutOutlier")
+addDataFrame(RmOl, sheet, showNA=TRUE, row.names=FALSE, characterNA="NA")
+
 
 # worksheets for ring summary
 vars <- c("Nitrification", "N_mineralisation", "P_mineralisation")
