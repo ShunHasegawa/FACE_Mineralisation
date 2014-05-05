@@ -29,8 +29,7 @@ Anova(Iml)
 
 # model simplification
 MdlSmpl(Iml)
-  # no factor was removed, but time:co2 is not 
-  # significant so remove
+  # no factor was removed
 
 Fml <- MdlSmpl(Iml)$model.reml
 
