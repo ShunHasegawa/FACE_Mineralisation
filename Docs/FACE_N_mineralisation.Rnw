@@ -1,0 +1,66 @@
+\Sexpr{set_parent('FACE_mineralisation_report.Rnw')}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% source files & libraries & setup options                                  %%
+%% need to be loaded here if one wants to compile this child document to PDF %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{N Mineralisation}
+
+%%% CO2 trt %%%
+\subsubsection{CO$_2$ trt}
+
+\begin{figure}[!h]\label{figure:CO2N_min}
+
+\begin{center}
+
+<<Fig_FACE_CO2_Mine_N_min, echo=FALSE, fig.height=3, fig.width=6>>=
+TrtFg[[2]]
+@
+
+\caption{N mineralisation rates at CO$_2$ treatments}
+\end{center}
+\end{figure}
+
+<<Table_FACE_CO2_Mine_N_min, echo=FALSE, results='asis'>>=
+printTbl(TrtSmmryTbl[[2]], 
+         caption = "CO2 trt mean of N mineralisation",
+         label = "table:FACE_CO2_N_min")
+@
+
+%% Stats %%
+<<ReadScript_FACE_Mine_N_min, echo=FALSE, cache=FALSE, include=FALSE>>=
+read_chunk('R/Stats_N_min.R')
+source("R/Stats_N_min.R")
+@
+
+\paragraph{Stats}
+\noindent
+
+%<<Stat_FACE_Mine_N_min, echo=TRUE, results='markup'>>=
+%@
+
+<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='asis'>>=
+@
+
+%%% Ring %%%
+\clearpage
+\subsubsection{Ring}
+
+\begin{figure}[!h]\label{figure:RingN_min}
+\begin{center}
+
+<<Fig_FACE_Ring_Mine_N_min, echo=FALSE, fig.height=3, fig.width=6>>=
+RngFg[[2]]
+@
+
+\caption{N mineralisation rates in each ring}
+\end{center}
+\end{figure}
+
+<<Table_FACE_Ring_Mine_N_min, echo=FALSE, results='asis'>>=
+printRngTbl(RngSmmryTbl[[2]], 
+            caption = "Ring mean of N mineralisation", 
+            label = "table:FACE_ring_N_min",
+            size = "small")
+@
