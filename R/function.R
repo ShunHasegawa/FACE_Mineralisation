@@ -91,26 +91,23 @@ Crt_SmryDF <- function(data, val = "value"){
 ####################
 PltMean <- function(data, ...){
   
-  vars <- c(substitute(NO[3]^"-"-N), 
-            substitute(NH[4]^"+"-N),
-            substitute(PO[4]^"3-"-P))
+  vars <- paste("Net", c("nitrification", "N_mineralisation", "P_mineralisation"), "rates")
+                
   # subsitute returens argument as it is without calculation (similar to expression())
   
-  yvars <- lapply(vars, function(x) bquote(Soil-extractable~.(x)))
-  # bquote allows one to call an object and return expression
-  
-  ylabs <- lapply(yvars, function(x) {
+  ylabs <- lapply(vars, function(x) {
     c(expression(), 
-      bquote(atop(paste(.(x)), paste((mg~DW_kg^"-1")))))         
+      bquote(atop(.(x), paste((mg~DW_kg^"-1"~d^"-1")))))         
   })
+  
   # atop: put the 1st argument on top of the 2nd
   
   # create ylab according to variable
-  ntrs <- c("no", "nh", "po")
+  ntrs <- c("nitrification", "n.min", "p.min")
   
   # when plotting multiple variables at the same time
   if(length(unique(data$variable)) > 1) 
-    ylab <- expression(Soil-extractable~nutrient~(mg~DW_kg^"-1")) else {
+    ylab <- expression((mg~DW_kg^"-1"~d^"-1")) else {
       # only one variable
       for (i in 1:3){
         if(unique(data$variable) == ntrs[i]) ylab  <- ylabs[[i]]
@@ -263,7 +260,7 @@ printRngTbl <- function(tbl, caption, label, ...){
 ##############################
 # subset data and droplevels #
 ##############################
-subsetD <- function(data,...){
-  droplevels(subset(data, ...))
+subsetD <- function(...){
+  droplevels(subset(...))
 }
 
