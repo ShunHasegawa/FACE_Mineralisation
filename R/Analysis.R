@@ -44,3 +44,8 @@ save(mine, file = "Output//Data/mineralisation.RData")
 # Excel summary table #
 #######################
 source("R/SummaryExlTable.R")
+
+########
+# Figs #
+########
+source("R//Figs.R")
