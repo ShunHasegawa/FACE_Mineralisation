@@ -41,7 +41,7 @@ mine$date <- as.Date(ave(MeanDate, mine$time), origin = origin) # same date for 
 mine$id <- mine$ring:mine$plot
 
 # save
-save(mine, file = "Output//Data/mineralisation.RData")
+save(mine, file = "output//data/FACE_mineralisation.RData")
 
 #######################
 # Excel summary table #
