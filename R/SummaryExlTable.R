@@ -6,7 +6,7 @@ RngSmmryTbl <- dlply(mineMlt, .(variable), function(x) CreateTable(x, fac = "rin
 RngMean <- ddply(mineMlt, .(time, date, co2, ring, variable), summarise, value = mean(value, na.rm = TRUE)) 
 
 # treat summary table $ mean
-TrtSmmryTbl <- dlply(RngMean, .(variable), function(x) CreateTable(x, fac = "co2",  digit = 3, nsmall =3))
+TrtSmmryTbl <- dlply(RngMean, .(variable), function(x) CreateTable(x, fac = "co2",  digit = 3, nsmall = 3, scientific = FALSE))
 
 ## create xcel workbook ##
 wb <- createWorkbook()
