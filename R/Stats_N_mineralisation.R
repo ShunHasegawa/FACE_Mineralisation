@@ -52,19 +52,6 @@ FACE_Mine_Nmin_CntrstDf <- cntrstTbl(cntrst, data = mine, digit = 2)
 
 FACE_Mine_Nmin_CntrstDf
 
-########################
-# remove highest value #
-########################
-bxplts(value= "n.min", ofst= .128, data= subset(mine, n.min < max(n.min)))
-bxplts(value= "n.min", ofst= .5, data= subset(mine, n.min < max(n.min)))
-m1 <- lme(1/(n.min + .5) ~ co2 * time, random = ~1|ring/plot, data =  subset(mine, n.min < max(n.min)))
-plot(m1)
-qqnorm(m1, ~ resid(.)|id)
-qqnorm(residuals.lm(m1))
-qqline(residuals.lm(m1))
-# doesn't make difference
-
-
 ## ----Stat_FACE_Mine_N_minSmmry
 # The starting model is:
 Iml$call
