@@ -72,7 +72,7 @@ crSheet <- function(sheetname, dataset){
   addDataFrame(dataset, sheet, showNA = TRUE, row.names = FALSE, startRow = 2)
   
   #title of the sheet
-  addDataFrame(t(c(sheetname, "unit=mg DrySoil kg^(-1)")), sheet, startRow = 1, row.names = FALSE, col.names = FALSE)
+  addDataFrame(t(c(sheetname, "unit=mg DrySoil kg^(-1) day^(-1)")), sheet, startRow = 1, row.names = FALSE, col.names = FALSE)
 }
 
 ############################
