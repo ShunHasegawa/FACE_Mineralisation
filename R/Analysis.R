@@ -37,6 +37,9 @@ mine$sampling <- as.Date(dmy(mine$sampling))
 MeanDate <- apply(cbind(mine$insertion, mine$sampling), 1, mean)
 mine$date <- as.Date(ave(MeanDate, mine$time), origin = origin) # same date for same time
 
+# id for later analysis
+mine$id <- mine$ring:mine$plot
+
 # save
 save(mine, file = "Output//Data/mineralisation.RData")
 
@@ -49,3 +52,8 @@ source("R/SummaryExlTable.R")
 # Figs #
 ########
 source("R//Figs.R")
+
+#########
+# Stats #
+#########
+source("R//Stats.R")
