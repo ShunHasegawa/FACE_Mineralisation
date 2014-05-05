@@ -60,13 +60,13 @@ source("R//Figs.R")
 % Ammonium %
 %%%%%%%%%%%%
 \clearpage
-\Sexpr{knit_child('')}
+% \Sexpr{knit_child('')}
 
 %%%%%%%%%%%%%
 % Phosphate %
 %%%%%%%%%%%%%
 \clearpage
-\Sexpr{knit_child('')}
+% \Sexpr{knit_child('')}
 
 %%%%%%%%%%%%%%%%
 % List of figs %
