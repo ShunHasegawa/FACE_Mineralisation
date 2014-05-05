@@ -58,13 +58,13 @@ source("R//Figs.R")
 % Ammonium %
 %%%%%%%%%%%%
 \clearpage
-% \Sexpr{knit_child('')}
+\Sexpr{knit_child('FACE_N_mineralisation.Rnw')}
 
 %%%%%%%%%%%%%
 % Phosphate %
 %%%%%%%%%%%%%
 \clearpage
-% \Sexpr{knit_child('')}
+\Sexpr{knit_child('FACE_P_mineralisation.Rnw')}
 
 %%%%%%%%%%%%%%%%
 % List of figs %

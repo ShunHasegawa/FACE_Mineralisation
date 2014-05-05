@@ -30,8 +30,8 @@ printTbl(TrtSmmryTbl[[2]],
 
 %% Stats %%
 <<ReadScript_FACE_Mine_N_min, echo=FALSE, cache=FALSE, include=FALSE>>=
-read_chunk('R/Stats_N_min.R')
-source("R/Stats_N_min.R")
+read_chunk('R/Stats_N_mineralisation.R')
+source("R/Stats_N_mineralisation.R")
 @
 
 \paragraph{Stats}
