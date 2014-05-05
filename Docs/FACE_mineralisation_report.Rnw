@@ -17,8 +17,6 @@ opts_knit$set(root.dir=normalizePath('../'))
 
 
 <<readFiles, include=FALSE>>=
-rm(list=ls(all=TRUE))
-
 library(car)
 library(gmodels)
 library(lme4)
@@ -34,7 +32,7 @@ library(effects)
 library(ggplot2)
 library(xtable)
 
-source("R//functions.R")
+source("R//function.R")
 load("output//data//FACE_mineralisation.RData")
 source("R//SummaryExlTable.R")
 source("R//Figs.R")
