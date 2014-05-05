@@ -1,5 +1,10 @@
+# remove outlier
+boxplot(mine$nitrification)
+RmOl <- mine
+RmOl$nitrification[which(RmOl$nitrification == max(RmOl$nitrification))] <- NA
+
 # melt dataset
-mineMlt <- melt(mine, id = names(mine)[which(!(names(mine) %in% c("nitrification", "n.min", "p.min")))])
+mineMlt <- melt(RmOl, id = names(mine)[which(!(names(mine) %in% c("nitrification", "n.min", "p.min")))])
 
 # Ring summary table & mean
 RngSmmryTbl <- dlply(mineMlt, .(variable), function(x) CreateTable(x, fac = "ring", digit = 3, nsmall = 3))
