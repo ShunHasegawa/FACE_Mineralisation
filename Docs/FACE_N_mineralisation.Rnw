@@ -28,20 +28,33 @@ printTbl(TrtSmmryTbl[[2]],
          label = "table:FACE_CO2_N_min")
 @
 
+%%%%%%%%%%%
 %% Stats %%
+%%%%%%%%%%%
+
 <<ReadScript_FACE_Mine_N_min, echo=FALSE, cache=FALSE, include=FALSE>>=
 read_chunk('R/Stats_N_mineralisation.R')
 source("R/Stats_N_mineralisation.R")
 @
 
+\clearpage
 \paragraph{Stats}
 \noindent
+
+%%%%%%%%%%%
+% Summary %
+%%%%%%%%%%%
+
+<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='asis'>>=
+@
+
+%%%%%%%%%%
+% Detail %
+%%%%%%%%%%
 
 %<<Stat_FACE_Mine_N_min, echo=TRUE, results='markup'>>=
 %@
 
-<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='asis'>>=
-@
 
 %%% Ring %%%
 \clearpage

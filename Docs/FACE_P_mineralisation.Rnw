@@ -34,14 +34,23 @@ read_chunk('R/Stats_P_mineralisation.R')
 source("R/Stats_P_mineralisation.R")
 @
 
+\clearpage
 \paragraph{Stats}
 \noindent
+
+%%%%%%%%%%%
+% Summary %
+%%%%%%%%%%%
+<<Stat_FACE_Mine_P_minSmmry, echo=TRUE, results='asis'>>=
+@
+
+%%%%%%%%%%
+% Detail %
+%%%%%%%%%%
 
 %<<Stat_FACE_Mine_P_min, echo=TRUE, results='markup'>>=
 %@
 
-<<Stat_FACE_Mine_P_minSmmry, echo=TRUE, results='asis'>>=
-@
 
 %%% Ring %%%
 \clearpage

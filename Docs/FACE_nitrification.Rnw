@@ -28,20 +28,33 @@ printTbl(TrtSmmryTbl[[1]],
          label = "table:FACE_CO2_Nitrification")
 @
 
+%%%%%%%%%%%
 %% Stats %%
+%%%%%%%%%%%
 <<ReadScript_FACE_Mine_Nitrification, echo=FALSE, cache=FALSE, include=FALSE>>=
 read_chunk('R/Stats_Nitrification.R')
 source("R/Stats_Nitrification.R")
 @
 
+\clearpage
 \paragraph{Stats}
 \noindent
+
+%%%%%%%%%%%
+% Sumamry %
+%%%%%%%%%%%
+<<Stat_FACE_Mine_NitrificationSmmry, echo=TRUE, results='asis'>>=
+@
+
+
+%%%%%%%%%%%
+% Detaile %
+%%%%%%%%%%%
 
 %<<Stat_FACE_Mine_Nitrification, echo=TRUE, results='markup'>>=
 %@
 
-<<Stat_FACE_Mine_NitrificationSmmry, echo=TRUE, results='asis'>>=
-@
+
 
 %%% Ring %%%
 \clearpage
