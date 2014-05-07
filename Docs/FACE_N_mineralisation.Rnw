@@ -41,19 +41,19 @@ source("R/Stats_N_mineralisation.R")
 \paragraph{Stats}
 \noindent
 
-%%%%%%%%%%%
-% Summary %
-%%%%%%%%%%%
-
-<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='asis'>>=
-@
+% %%%%%%%%%%%
+% % Summary %
+% %%%%%%%%%%%
+% 
+% <<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='asis'>>=
+% @
 
 %%%%%%%%%%
 % Detail %
 %%%%%%%%%%
 
-%<<Stat_FACE_Mine_N_min, echo=TRUE, results='markup'>>=
-%@
+<<Stat_FACE_Mine_N_min, echo=TRUE, results='markup'>>=
+@
 
 
 %%% Ring %%%

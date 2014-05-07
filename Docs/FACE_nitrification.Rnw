@@ -40,21 +40,19 @@ source("R/Stats_Nitrification.R")
 \paragraph{Stats}
 \noindent
 
-%%%%%%%%%%%
-% Sumamry %
-%%%%%%%%%%%
-<<Stat_FACE_Mine_NitrificationSmmry, echo=TRUE, results='asis'>>=
-@
+% %%%%%%%%%%%
+% % Sumamry %
+% %%%%%%%%%%%
+% <<Stat_FACE_Mine_NitrificationSmmry, echo=TRUE, results='asis'>>=
+% @
 
 
 %%%%%%%%%%%
 % Detaile %
 %%%%%%%%%%%
 
-%<<Stat_FACE_Mine_Nitrification, echo=TRUE, results='markup'>>=
-%@
-
-
+<<Stat_FACE_Mine_Nitrification, echo=TRUE, results='markup'>>=
+@
 
 %%% Ring %%%
 \clearpage
