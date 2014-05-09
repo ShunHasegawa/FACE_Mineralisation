@@ -2,13 +2,14 @@
 
 range(mine$p.min)
 
-bxplts(value= "p.min", ofst= .03, data= mine)
-  # log looks slightly better
+bxcxplts(value= "p.min", data= mine, sval = .0192, fval = .1)
+bxplts(value= "p.min", ofst= .1, data= mine)
+  # use inverse
 
 # different random factor strucures
-m1 <- lme(log(p.min + .03) ~ co2 * time, random = ~1|ring/plot, data = mine)
-m2 <- lme(log(p.min + .03) ~ co2 * time, random = ~1|ring, data = mine)
-m3 <- lme(log(p.min + .03) ~ co2 * time, random = ~1|id, data = mine)
+m1 <- lme(1/(p.min + .1) ~ co2 * time, random = ~1|ring/plot, data = mine)
+m2 <- lme(1/(p.min + .1) ~ co2 * time, random = ~1|ring, data = mine)
+m3 <- lme(1/(p.min + .1) ~ co2 * time, random = ~1|id, data = mine)
 anova(m1, m2, m3)
 # m2 is better
 
@@ -41,7 +42,7 @@ plot(Fml)
 qqnorm(Fml, ~ resid(.)|ring)
 qqnorm(residuals.lm(Fml))
 qqline(residuals.lm(Fml))
-  # not very great...
+
 
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
