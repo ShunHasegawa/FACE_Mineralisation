@@ -46,8 +46,8 @@ qqline(residuals.lm(Fml))
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
 Iml$call
-xtable(Anova(Iml), floating = FALSE)
+Anova(Iml)
 
 # The final model is:
 Fml$call
-xtable(Anova(Fml), floating = FALSE)
+Anova(Fml)
