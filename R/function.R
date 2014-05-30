@@ -228,7 +228,7 @@ bxplts <- function(value, ofst = 0, data, ...){
 }
 
 # multiple box-cox power plot for different constant values
-bxcxplts <- function(value, data, sval, fval){
+bxcxplts <- function(value, data, sval, fval, ...){
   data$yval <- data[[value]]
   ranges <- seq(sval, fval, (fval - sval)/9)
   
@@ -237,7 +237,7 @@ bxcxplts <- function(value, data, sval, fval){
   BCmax <- vector()
   for (i in 1:10){
     data$y <- data$yval + ranges[i]
-    a <- boxcox(y ~ co2 * time, data = data)
+    a <- boxcox(y ~ co2 * time, data = data, ...)
     BCmax[i] <- a$x[a$y == max(a$y)]
   }
   
