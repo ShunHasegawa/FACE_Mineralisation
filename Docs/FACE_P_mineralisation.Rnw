@@ -41,7 +41,7 @@ source("R/Stats_P_mineralisation.R")
 %%%%%%%%%%%
 % Summary %
 %%%%%%%%%%%
-<<Stat_FACE_Mine_P_minSmmry, echo=TRUE, results='asis'>>=
+<<Stat_FACE_Mine_P_minSmmry, echo=TRUE, results='markup'>>=
 @
 
 %%%%%%%%%%
