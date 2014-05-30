@@ -29,7 +29,7 @@ vars <- c("Nitrification", "N_mineralisation", "P_mineralisation")
 shnames <- paste("Ring_mean.",vars ,sep="")
 l_ply(1:3, function(x) crSheet(sheetname = shnames[x], dataset = RngSmmryTbl[[x]]))
 
-# worksheets for temp trt summary
+# worksheets for co2 trt summary
 shnames <- paste("CO2_mean.", vars, sep = "")
 l_ply(1:3, function(x) crSheet(sheetname = shnames[x], dataset = TrtSmmryTbl[[x]]))
 
