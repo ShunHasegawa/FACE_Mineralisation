@@ -49,6 +49,20 @@ source("R//Figs.R")
 
 \section{N and P mineralisation}
 
+%%%%%%%%%%%%%%%
+% summary fig %
+%%%%%%%%%%%%%%%
+\subsection{Summary results}
+\begin{center}
+\begin{figure}[!ht]\label{figure:FACE_Mineralisation_Allres}
+
+\includegraphics[width=\textwidth]{../output/figs/FACE_Mineralisation_CO2Trt.pdf}
+
+\caption{Net mienralisation rates}
+
+\end{figure}
+\end{center}
+
 %%%%%%%%%%%
 % Nitrate %
 %%%%%%%%%%%
