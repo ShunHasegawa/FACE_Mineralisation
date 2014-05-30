@@ -6,6 +6,11 @@ bxcxplts(value= "p.min", data= mine, sval = .0192, fval = .1)
 bxplts(value= "p.min", ofst= .1, data= mine)
   # use box-cox lambda
 
+#poly time
+contrasts(mine$time) <- contr.poly(7, c(1:7))
+mine$time <- ordered(mine$time)
+
+
 # different random factor strucures
 m1 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|ring/plot, data = mine)
 m2 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|ring, data = mine)
@@ -14,10 +19,11 @@ anova(m1, m2, m3)
 # m2 is better
 
 # autocorelation
-atcr.cmpr(m2, rndmFac="ring")$models
+atml <- atcr.cmpr(m2, rndmFac="ring")
+atml$models
 # model 3 looks best
 
-Iml <- atcr.cmpr(m2, rndmFac="ring")[[3]]
+Iml <- atml[[3]]
 
 # The starting model is:
 Iml$call
@@ -42,6 +48,12 @@ plot(Fml)
 qqnorm(Fml, ~ resid(.)|ring)
 qqnorm(residuals.lm(Fml))
 qqline(residuals.lm(Fml))
+
+# withought auto-correlation
+Anova(m2)
+qqnorm(m2, ~ resid(.)|ring)
+qqnorm(residuals.lm(m2))
+qqline(residuals.lm(m2))
 
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
