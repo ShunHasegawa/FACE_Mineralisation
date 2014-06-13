@@ -5,7 +5,6 @@ NH4
 OldScript
 output
 Data/
-*.Rproj
 *tex
 *lof
 *log
