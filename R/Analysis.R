@@ -15,6 +15,7 @@ library(effects)
 library(ggplot2)
 library(scales)
 library(xtable)
+library(visreg)
 
 source("R/function.R")
 
@@ -22,8 +23,7 @@ source("R/function.R")
 # Process data frame #
 ######################
 # source("R/ProcessData.R")
-# save
-save(mine, file = "output//data/FACE_mineralisation.RData")
+load("output//data/FACE_mineralisation.RData")
 
 #######################
 # Excel summary table #
