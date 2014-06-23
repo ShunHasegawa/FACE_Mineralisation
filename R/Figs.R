@@ -36,3 +36,20 @@ ylab_label <- function(variable, value){
 pl <- PltCO2Mean(TrtMean) +
   facet_grid(variable~., scales= "free_y", labeller= ylab_label)
 ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl, width = 6, height = 6)
+
+
+########################################################
+# plot soil moist and temp for each incubation periods #
+########################################################
+SoilVarDF <- mine[, c("co2", "ring", "date", "Moist", "Temp_Mean", "Temp_Min", "Temp_Max")]
+
+# co2
+pl <- PltSoilVar(data = SoilVarDF, var = "co2") +
+  scale_color_manual(values = c("blue", "red"), expression(CO[2]~trt), labels = c("Ambient", expression(eCO[2])))
+ggsavePP(filename = "output//figs/FACE_Mineralisation_SoilVarSummary_CO2", plot = pl, width = 6, height = 4)
+
+
+# ring
+pl <- PltSoilVar(data = SoilVarDF, var = "ring") +
+  scale_color_manual(values = palette(), "Ring", labels = paste("Ring", c(1:6), sep = "_"))
+ggsavePP(filename = "output//figs/FACE_Mineralisation_SoilVarSummary_Ring", plot = pl, width = 6, height = 4)
