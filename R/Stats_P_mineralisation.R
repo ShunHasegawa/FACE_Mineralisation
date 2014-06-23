@@ -3,7 +3,8 @@
 range(mine$p.min)
 
 bxcxplts(value= "p.min", data= mine, sval = .0192, fval = .1)
-bxplts(value= "p.min", ofst= .1, data= mine)
+bxcxplts(value= "p.min", data= mine, sval = .0192, fval = .1, lambda = seq(-3, 2, 1/10))
+bxplts(value= "p.min", ofst= .1, data= mine, lambda = seq(-3, -1, 1/10))
   # use box-cox lambda
 
 # different random factor strucures
@@ -42,6 +43,104 @@ plot(Fml)
 qqnorm(Fml, ~ resid(.)|ring)
 qqnorm(residuals.lm(Fml))
 qqline(residuals.lm(Fml))
+
+
+## ---Stat_FACE_Mine_P_min_withSoilvar
+
+##########
+# ANCOVA #
+##########
+Iml_ancv <- lmer((p.min + .1)^(-2) ~ co2 * log(Moist) +
+                   (1|block/ring/plot), 
+                 data = subsetD(mine, time != 1))
+
+Anova(Iml_ancv)
+Fml_ancv <- Iml_ancv
+
+# main effects
+plot(allEffects(Fml_ancv))
+
+# model diagnosis
+plot(Fml_ancv)
+qqnorm(resid(Fml_ancv))
+qqline(resid(Fml_ancv))
+
+########################
+# plot predicted value #
+########################
+
+# reverse transormation
+ReTrf <- function(x) x^(-1/2)-.1
+
+PltPr <- function(){
+  visreg(Fml_ancv, xvar = "Moist", 
+         by = "co2", 
+         trans = ReTrf, 
+         overlay = TRUE, print.cond=TRUE,
+         line.par = list(col = c("blue", "red")),
+         points.par = list(col = c("blue", "red")))
+  
+  timePos <- seq(-0.02, 0.05, length.out = 6)
+  times <- c(2:7)
+
+  for (i in 1:6){
+    lines(x = range(mine$Moist[mine$time == times[i]]), y = rep(timePos[i], 2), lwd = 2)
+    text(x = mean(range(mine$Moist[mine$time == times[i]])), y = timePos[i], 
+         labels = paste("Time =", times[i]), pos = 3)
+  }
+  legend("topright", lty = 1, leg = "Moisture range", bty = "n")
+}
+
+PltPr()
+## Plot predicted values for each block ##
+
+# Create a data frame for explanatory
+expDF <- with(mine, expand.grid(ring = unique(ring), 
+                               plot = unique(plot),
+                               Moist = seq(min(Moist), max(Moist), length.out= 100)))
+expDF <- within(expDF, {
+  block = recode(ring, "c(1,2) = 'A'; c(3,4) = 'B'; c(5,6) = 'C'")
+  co2 = factor(ifelse(ring %in% c(1, 4, 5), "elev", "amb"))
+})
+
+# adjust moisture range for each block
+boxplot(Moist ~ block, data = expDF)
+
+
+########################################
+# adjust moisture range for each block #
+########################################
+BlkminMoist <- function(variable, data){
+  a <- range(subset(mine, time != 1 & block == variable)$Moist)
+  df <- subset(data, block == variable & 
+                 Moist <= a[2] & 
+                 Moist >= a[1])
+  return(df)
+}
+AdjexpDF <- ldply(list("A", "B", "C"), function(x) BlkminMoist(variable = x, data = expDF))
+boxplot(Moist ~ block, data = AdjexpDF)
+
+# predicted values
+PredVal <- predict(Fml_ancv, re.form = ~ (1|block/ring/plot), newdata = AdjexpDF)
+PredDF <- cbind(AdjexpDF, PredVal)
+
+theme_set(theme_bw())
+
+p <- ggplot(PredDF, aes(x = Moist, y = ReTrf(PredVal), col = co2))
+
+p + geom_line() +
+  geom_point(aes(x = Moist, y = p.min, col = co2), data = subsetD(mine, time != 1)) + 
+  scale_color_manual("co2", values = c("blue", "red")) +
+  facet_grid(.~block) +
+  labs(y = "P_mineralisation")
+
+
+p <- ggplot(PredDF, aes(x = log(Moist), y = PredVal, col = co2))
+p + geom_line() +
+  geom_point(aes(x = log(Moist), y = (p.min + .1)^(-2), col = co2), data = subsetD(mine, time != 1)) + 
+  scale_color_manual("co2", values = c("blue", "red")) +
+  facet_grid(.~block, scale = "free_x") + 
+  labs(y = expression((p.min + .1)^(-2)))
 
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
