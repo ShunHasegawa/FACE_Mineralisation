@@ -30,16 +30,21 @@ mine<-read.csv("Data/mineralisation.kgbais.csv",
 # remove unnecessary rows
 mine <- droplevels(mine[complete.cases(mine), ])
 
-# format date
-mine$insertion <- as.Date(dmy(mine$insertion))
-mine$sampling <- as.Date(dmy(mine$sampling))
+# organise data frame
+mine <- within(mine, {
+  insertion <- as.Date(dmy(insertion))
+  sampling <- as.Date(dmy(sampling))
+  
+  # id for later analysis
+  id <- ring:plot
+  
+  # block for later analysis
+  block <- recode(ring, "1:2 = 'A'; 3:4 = 'B'; 5:6 = 'C'")
+})
 
 # middle date of insertion and sampling
 MeanDate <- apply(cbind(mine$insertion, mine$sampling), 1, mean)
 mine$date <- as.Date(ave(MeanDate, mine$time), origin = origin) # same date for same time
-
-# id for later analysis
-mine$id <- mine$ring:mine$plot
 
 # save
 save(mine, file = "output//data/FACE_mineralisation.RData")
