@@ -1,9 +1,19 @@
 ##################
 # Moist and Temp #
 ##################
-theme_set(theme_bw())
+scatterplotMatrix(~ log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
+                  data = mine, diag = "boxplot")
 
-p <- ggplot(subsetD(mine, time != 1), aes(x = Temp_Max, y = log(Moist), col = ring))
+# check correlation
+mine$logMoist <- log(mine$Moist)
+with(mine, cor(cbind(logMoist, Temp_Max, Temp_Min, Temp_Mean)))
+
+# moisture and temperature appear to be negatively 
+# correlated, so don't use them in the model at the same
+# time
+
+theme_set(theme_bw())
+p <- ggplot(subsetD(mine, time != 1), aes(x = Temp_Min, y = log(Moist), col = ring))
 p2 <- p + geom_point(alpha = .5) 
 
 pl  <- p2 + facet_wrap( ~ ring)
