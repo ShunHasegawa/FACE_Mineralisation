@@ -188,6 +188,11 @@ Package: survival
 Source: CRAN
 Version: 2.37-7
 
+Package: visreg
+Source: CRAN
+Version: 2.0-5
+Requires: lattice
+
 Package: xlsx
 Source: CRAN
 Version: 0.5.5
