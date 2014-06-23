@@ -21,7 +21,7 @@ source("R/function.R")
 ######################
 # Process data frame #
 ######################
-
+# source("R/ProcessData.R")
 # save
 save(mine, file = "output//data/FACE_mineralisation.RData")
 
