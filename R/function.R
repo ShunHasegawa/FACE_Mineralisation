@@ -210,7 +210,7 @@ atcr.cmpr <- function(model, rndmFac){
 # log OR sqrt OR power(1/3) OR inverse OR box-cox
 bxplts <- function(value, ofst = 0, data, ...){
   data$y <- data[[value]] + ofst #ofst is added to make y >0
-  a <- boxcox(y ~ co2 * time, data = data)
+  a <- boxcox(y ~ co2 * time, ..., data = data)
   par(mfrow = c(2, 3))
   boxplot(y ~ co2*time, data, main = "row")
   boxplot(log(y) ~ co2*time, main = "log", data)
