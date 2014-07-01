@@ -45,7 +45,7 @@ qqnorm(residuals.lm(Fml))
 qqline(residuals.lm(Fml))
 
 
-## ---Stat_FACE_Mine_P_min_withSoilvar
+## ----Stat_FACE_Mine_P_min_withSoilvar
 
 ##########
 # ANCOVA #
@@ -151,7 +151,7 @@ Anova(Iml)
 Fml$call
 Anova(Fml)
 
-## ---Stat_FACE_Mine_P_min_withSoilvarSmmry
+## ----Stat_FACE_Mine_P_min_withSoilvarSmmry
 # The initial model:
 Iml_ancv@call
 Anova(Iml_ancv)
