@@ -128,7 +128,7 @@ theme_set(theme_bw())
 
 p <- ggplot(PredDF, aes(x = Moist, y = ReTrf(PredVal), col = co2))
 
-p + geom_line() +
+PlPred <- p + geom_line() +
   geom_point(aes(x = Moist, y = p.min, col = co2), data = subsetD(mine, time != 1)) + 
   scale_color_manual("co2", values = c("blue", "red")) +
   facet_grid(.~block) +
@@ -150,3 +150,13 @@ Anova(Iml)
 # The final model is:
 Fml$call
 Anova(Fml)
+
+## ---Stat_FACE_Mine_P_min_withSoilvarSmmry
+# The initial model:
+Iml_ancv@call
+Anova(Iml_ancv)
+
+# The final model is:
+Fml_ancv@call
+Anova(Fml_ancv)
+PlPred
