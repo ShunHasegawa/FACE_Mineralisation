@@ -130,6 +130,11 @@ GithubUsername: rstudio
 GithubRef: master
 GithubSha1: 0e360b5c15d319b796a1d4fdc83a2c5ae7a67333
 
+Package: pbkrtest
+Source: CRAN
+Version: 0.3-8
+Requires: MASS, lme4, Matrix
+
 Package: plyr
 Source: CRAN
 Version: 1.8.1
