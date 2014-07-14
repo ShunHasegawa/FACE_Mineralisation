@@ -53,7 +53,7 @@ FACE_Mine_Nit_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, digit = 2)
 
 FACE_Mine_Nit_CntrstDf
 
-## ----Stat_FACE_Mine_P_min_withSoilvar
+## ----Stat_FACE_Mine_Nitrification_withSoilvar
 
 ##########
 # ANCOVA #
