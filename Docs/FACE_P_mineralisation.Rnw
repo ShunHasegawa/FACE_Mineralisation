@@ -29,9 +29,11 @@
 % library(xtable)
 % library(visreg)
 % library(pbkrtest)
+% library(lmerTest)
 % 
 % source("R//function.R")
 % load("output//data//FACE_mineralisation.RData")
+% load("output//data/postDF.RData")
 % source("R//SummaryExlTable.R")
 % source("R//Figs.R")
 % @
@@ -75,7 +77,7 @@ source("R/Stats_P_mineralisation.R")
 <<Stat_FACE_Mine_P_minSmmry, echo=TRUE, results='markup'>>=
 @
 
-\paragraph{ANCOVA with soil moisture}
+\paragraph{ANCOVA with soil variables}
 \noindent
 <<Stat_FACE_Mine_P_min_withSoilvarSmmry, echo=TRUE, results='markup'>>=
 @
