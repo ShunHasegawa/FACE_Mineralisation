@@ -366,3 +366,29 @@ PltSoilVar <- function(data, var, tdrData, linealpha = .5){
                col = "gray30", size = .5,linetype = "dotted")
   pl
 }
+
+##########################
+# Plot predicted values #
+#########################
+PltPrdVal <- function(data, model, variable,  ...){
+  a <- visreg(model,
+              xvar = variable,
+              overlay = TRUE, 
+              print.cond=TRUE, 
+              line.par = list(col = c("blue", "red")),
+              points.par = list(col = c("blue", "red")),
+              ...)
+  
+  timePos <- seq(min(a[[1]][[2]][["r"]]), # min of predicted values
+                 max(a[[1]][[2]][["r"]]), 
+                 length.out = 10)
+  times <- c(2:7)
+  data$yval <- data[, variable]
+  for (i in 1:10){
+    lines(x = range(data$yval[data$time == times[i]]), y = rep(timePos[i], 2), lwd = 2)
+    text(x = mean(range(data$yval[data$time == times[i]])), y = timePos[i], 
+         labels = paste("Time =", times[i]), pos = 3)
+  }
+  legend("topright", lty = 1, leg = paste(variable, "range"), bty = "n")
+}
+
