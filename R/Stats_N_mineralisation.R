@@ -104,7 +104,7 @@ Fml$call
 xtable(Anova(Fml), floating = FALSE)
 
 # Contrast
-print(xtable(FACE_Mine_Nit_CntrstDf, floating = FALSE), 
+print(xtable(FACE_Mine_Nmin_CntrstDf, floating = FALSE), 
       include.rownames = FALSE)
 
 ## ----Stat_FACE_Mine_N_min_withSoilvarSmmry
