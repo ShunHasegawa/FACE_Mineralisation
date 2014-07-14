@@ -110,7 +110,7 @@ xtable(Anova(Fml), floating = FALSE)
 print(xtable(FACE_Mine_Nit_CntrstDf, floating = FALSE), 
       include.rownames = FALSE)
 
-## ----Stat_FACE_Mine_P_min_withSoilvarSmmry
+## ----Stat_FACE_Mine_Nitrification_withSoilvarSmmry
 # The initial model:
 Iml_ancv@call
 Anova(Iml_ancv)
