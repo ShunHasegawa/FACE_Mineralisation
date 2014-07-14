@@ -106,3 +106,23 @@ xtable(Anova(Fml), floating = FALSE)
 # Contrast
 print(xtable(FACE_Mine_Nit_CntrstDf, floating = FALSE), 
       include.rownames = FALSE)
+
+## ----Stat_FACE_Mine_N_min_withSoilvarSmmry
+# The initial model:
+Iml_ancv@call
+Anova(Iml_ancv)
+
+# The final model is:
+Fml_ancv@call
+Anova(Fml_ancv)
+Anova(Fml_ancv, test.statistic = "F")
+
+# Plot predicted values
+Rtr <- function(x) 1/x - .5
+par(mfrow = c(1,2))
+l_ply(c("Moist", "Temp_Mean"), function(x) 
+  PltPrdVal(model = Fml_ancv, variable = x, trans = Rtr, data = postDF)
+)
+
+# 95 % CI for estimates
+Est.val
