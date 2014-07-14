@@ -17,6 +17,7 @@ library(scales)
 library(xtable)
 library(visreg)
 library(pbkrtest)
+library(lmerTest)
 
 source("R/function.R")
 
