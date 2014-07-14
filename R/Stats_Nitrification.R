@@ -119,9 +119,9 @@ Anova(Iml_ancv)
 Fml_ancv@call
 Anova(Fml_ancv)
 Anova(Fml_ancv, test.statistic = "F")
-Est.val
 
 # Plot predicted values
+Rtr <- function(x) exp(x + .1)
 PltPrdVal(model = Fml_ancv, variable = "Moist", 
           by = "co2",
           trans = Rtr,
