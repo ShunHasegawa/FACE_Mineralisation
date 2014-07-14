@@ -34,6 +34,7 @@ library(scales)
 library(xtable)
 library(visreg)
 library(pbkrtest)
+library(lmerTest)
 
 source("R//function.R")
 load("output//data//FACE_mineralisation.RData")
