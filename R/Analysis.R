@@ -41,4 +41,6 @@ source("R//Figs.R")
 #########
 # post-co2 data for ancova with soil variables
 postDF <- subsetD(mine, time != 1)
+save(postDF, file = "output//data/postDF.RData")
+
 source("R//Stats.R")
