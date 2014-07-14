@@ -32,10 +32,10 @@ load("Data/FACE_TDR_ProbeDF.RData")
 # subset iem
 TdrSoil <- subsetD(FACE_TDR_ProbeDF, Sample == "soil")
 
-# compute mean of soil variables for given period
+# compute mean of soil variable for given period
 SoilVarDD <- function(data, rings, plots, Start, End){
-  sDF <- subset(data, Date >= Start & Date >= End & ring == rings & plot == plots)
-  ddply(sDF, .(ring, plot),function(x) colMeans(x[c("Moist", "Temp_Mean", "Temp_Min", "Temp_Max")], na.rm = TRUE))
+  sDF <- subset(data, Date >= Start & Date <= End & ring == rings & plot == plots)
+  colMeans(sDF[c("Moist", "Temp_Mean", "Temp_Min", "Temp_Max")], na.rm = TRUE)
 }
 
 MineSoil <- ddply(mine, .(insertion, sampling, ring, plot), 
@@ -43,3 +43,7 @@ MineSoil <- ddply(mine, .(insertion, sampling, ring, plot),
 
 # merge
 mine <- merge(mine, MineSoil, by = c("insertion", "sampling", "ring", "plot"))
+
+
+# save
+save(mine, file = "output//data/FACE_mineralisation.RData")
