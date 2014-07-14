@@ -60,11 +60,11 @@ print(xyplot(log(p.min + .1) ~ log(Moist) | ring + plot, postDF, type = c("r", "
 print(xyplot(log(p.min + .1) ~ Temp_Max | ring + plot, postDF, type = c("r", "p")))
 
 
-Iml_ancv <- lmer((p.min + .1)^(-2) ~ co2 * log(Moist) +
-                   (1|block/ring/plot), 
-                 data = subsetD(mine, time != 1))
+# Iml_ancv <- lmer((p.min + .1)^(-2) ~ co2 * log(Moist) +
+#                    (1|block/ring/plot), 
+#                  data = subsetD(mine, time != 1))
 
-Iml_ancv <- lmer(log(p.min + .1) ~ co2 * (Moist + Temp_Mean) + (1|block) + (1|ring) + (1|plot), data = postDF)
+Iml_ancv <- lmer(log(p.min + .1) ~ co2 * (Moist + Temp_Mean) + (1|block) + (1|ring) + (1|id), data = postDF)
 # Fml_ancv <- stepLmer(Iml_ancv)
 # eror message cause random terms don't explain any variabtion
 
@@ -72,13 +72,13 @@ Iml_ancv <- lmer(log(p.min + .1) ~ co2 * (Moist + Temp_Mean) + (1|block) + (1|ri
 Anova(Iml_ancv)
 # no need for interaction
 m2 <- lmer(log(p.min + .1) ~ co2 + Moist + Temp_Mean 
-           + (1|block) + (1|ring) + (1|plot), data = postDF)
+           + (1|block) + (1|ring) + (1|id), data = postDF)
 anova(Iml_ancv, m2)
 Anova(m2)
 
 # remove co2
 m3 <- lmer(log(p.min + .1) ~ Moist + Temp_Mean 
-           + (1|block) + (1|ring) + (1|plot), data = postDF)
+           + (1|block) + (1|ring) + (1|id), data = postDF)
 
 anova(m2, m3)
 Anova(m3)
