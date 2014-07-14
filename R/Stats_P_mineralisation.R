@@ -95,27 +95,10 @@ plot(allEffects(Fml_ancv))
 plot(Fml_ancv)
 qqnorm(resid(Fml_ancv))
 qqline(resid(Fml_ancv))
-  # not very good...
+  # not very good... Other transformations (log(Moist), (p.min + .1)^(-2)) were
+  # teste. They improved the model but didn't sinificantly change the final
+  # interpretation so just use the simple one.
 
-# log moist
-scatterplotMatrix(~ log(p.min + .1) + log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
-                  data = postDF, diag = "boxplot")
-Iml_ancv <- lmer(log(p.min + .1) ~ co2 * (log(Moist) + Temp_Mean) 
-                 + (1|block) + (1|ring) + (1|plot), data = postDF)
-Anova(Iml_ancv)
-plot(Iml_ancv)
-qqnorm(resid(Iml_ancv))
-qqline(resid(Iml_ancv))
-
-
-scatterplotMatrix(~ I((p.min + .1)^(-2)) + log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
-                  data = postDF, diag = "boxplot")
-Iml_ancv <- lmer((p.min + .1)^(-2) ~ co2 * (log(Moist) + Temp_Mean) 
-                 + (1|block) + (1|ring) + (1|plot), data = postDF)
-Anova(Iml_ancv)
-plot(Iml_ancv)
-qqnorm(resid(Iml_ancv))
-qqline(resid(Iml_ancv))
 
 ########################
 # plot predicted value #
