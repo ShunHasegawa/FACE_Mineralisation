@@ -58,7 +58,20 @@ FACE_Mine_Nit_CntrstDf
 ##########
 # ANCOVA #
 ##########
-# plot all variables
+## plot all variables
+scatterplotMatrix( ~ nitrification  + Moist + Temp_Max + Temp_Min + Temp_Mean,
+                  data = postDF, diag = "boxplot")
+print(xyplot(nitrification ~ Moist | ring + plot, postDF, type = c("r", "p")))
+print(xyplot(nitrification ~ Temp_Mean | ring + plot, postDF, type = c("r", "p")))
+
+## analysis
+Iml_ancv <- lmer(nitrification ~ co2 * (Moist + Temp_Mean) + (1|block) + (1|ring) + (1|id), data = postDF)
+Anova(Iml_ancv)
+
+# model simplification
+Fml_ancv <- stepLmer(Iml_ancv)
+
+
 
 ## ----Stat_FACE_Mine_NitrificationSmmry
 # The starting model is:
