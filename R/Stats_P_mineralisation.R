@@ -8,17 +8,16 @@ bxplts(value= "p.min", ofst= .1, data= mine, lambda = seq(-3, -1, 1/10))
   # use box-cox lambda
 
 # different random factor strucures
-m1 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|ring/plot, data = mine)
-m2 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|ring, data = mine)
-m3 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|id, data = mine)
-anova(m1, m2, m3)
-# m2 is better
+m1 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|block/ring/plot, data = mine)
+RndmComp(m1)$anova
+# m5 is better, but use m1 for time being
 
 # autocorelation
-atcr.cmpr(m2, rndmFac="ring")$models
-# model 3 looks best
+atml <- atcr.cmpr(m1)
+atml$models
+# model 5 looks best
 
-Iml <- atcr.cmpr(m2, rndmFac="ring")[[3]]
+Iml <- atml[[5]]
 
 # The starting model is:
 Iml$call
@@ -44,18 +43,50 @@ qqnorm(Fml, ~ resid(.)|ring)
 qqnorm(residuals.lm(Fml))
 qqline(residuals.lm(Fml))
 
-
 ## ----Stat_FACE_Mine_P_min_withSoilvar
 
 ##########
 # ANCOVA #
 ##########
+# plot all variables
+scatterplotMatrix(~ I((p.min + .1)^(-2)) + Moist + Temp_Max + Temp_Min + Temp_Mean,
+                  data = postDF, diag = "boxplot")
+scatterplotMatrix(~ log(p.min + .1) + Moist + Temp_Max + Temp_Min + Temp_Mean,
+                  data = postDF, diag = "boxplot")
+
+print(xyplot(log(p.min + .1) ~ Moist | ring + plot, postDF, type = c("r", "p")))
+print(xyplot(log(p.min + .1) ~ log(Moist) | ring + plot, postDF, type = c("r", "p")))
+
+print(xyplot(log(p.min + .1) ~ Temp_Max | ring + plot, postDF, type = c("r", "p")))
+
+
 Iml_ancv <- lmer((p.min + .1)^(-2) ~ co2 * log(Moist) +
                    (1|block/ring/plot), 
                  data = subsetD(mine, time != 1))
 
+Iml_ancv <- lmer(log(p.min + .1) ~ co2 * (Moist + Temp_Mean) + (1|block) + (1|ring) + (1|plot), data = postDF)
+# Fml_ancv <- stepLmer(Iml_ancv)
+# eror message cause random terms don't explain any variabtion
+
+# model simplification by hand
 Anova(Iml_ancv)
-Fml_ancv <- Iml_ancv
+# no need for interaction
+m2 <- lmer(log(p.min + .1) ~ co2 + Moist + Temp_Mean 
+           + (1|block) + (1|ring) + (1|plot), data = postDF)
+anova(Iml_ancv, m2)
+Anova(m2)
+
+# remove co2
+m3 <- lmer(log(p.min + .1) ~ Moist + Temp_Mean 
+           + (1|block) + (1|ring) + (1|plot), data = postDF)
+
+anova(m2, m3)
+Anova(m3)
+
+# final model
+Fml_ancv <- m3
+Anova(Fml_ancv)
+Anova(Fml_ancv, test.statistic = "F")
 
 # main effects
 plot(allEffects(Fml_ancv))
@@ -64,6 +95,27 @@ plot(allEffects(Fml_ancv))
 plot(Fml_ancv)
 qqnorm(resid(Fml_ancv))
 qqline(resid(Fml_ancv))
+  # not very good...
+
+# log moist
+scatterplotMatrix(~ log(p.min + .1) + log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
+                  data = postDF, diag = "boxplot")
+Iml_ancv <- lmer(log(p.min + .1) ~ co2 * (log(Moist) + Temp_Mean) 
+                 + (1|block) + (1|ring) + (1|plot), data = postDF)
+Anova(Iml_ancv)
+plot(Iml_ancv)
+qqnorm(resid(Iml_ancv))
+qqline(resid(Iml_ancv))
+
+
+scatterplotMatrix(~ I((p.min + .1)^(-2)) + log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
+                  data = postDF, diag = "boxplot")
+Iml_ancv <- lmer((p.min + .1)^(-2) ~ co2 * (log(Moist) + Temp_Mean) 
+                 + (1|block) + (1|ring) + (1|plot), data = postDF)
+Anova(Iml_ancv)
+plot(Iml_ancv)
+qqnorm(resid(Iml_ancv))
+qqline(resid(Iml_ancv))
 
 ########################
 # plot predicted value #
