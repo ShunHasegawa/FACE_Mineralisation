@@ -105,15 +105,12 @@ qqline(resid(Fml_ancv))
 # back transformation
 Rtr <- function(x) exp(x + .1)
 
-PltPrdVal(model = Fml_ancv, variable = "Moist", 
-#           cond = list(Temp_Mean = median(postDF$Temp_Mean)),
-#           ylab = paste("P-mineralisation (Temp = ", median(postDF$Temp_Mean), ")", sep = ""),
-#           ylim = c(0, .03),
-          trans = Rtr,
-          data = postDF)
-PltPrdVal(model = Fml_ancv, variable = "Temp_Mean", 
-          trans = Rtr,
-          data = postDF)
+par(mfrow = c(1,2))
+l_ply(c("Moist", "Temp_Mean"), function(x){
+  PltPrdVal(model = Fml_ancv, variable = x, 
+            trans = Rtr,
+            data = postDF)
+})
 
 ########################
 # Confidence intervals #
@@ -141,4 +138,15 @@ Anova(Iml_ancv)
 Fml_ancv@call
 Anova(Fml_ancv)
 Anova(Fml_ancv, test.statistic = "F")
+
+# 95% CI
 Est.val
+
+# Plot predicted values
+Rtr <- function(x) exp(x + .1)
+par(mfrow = c(1,2))
+l_ply(c("Moist", "Temp_Mean"), function(x){
+  PltPrdVal(model = Fml_ancv, variable = x, 
+            trans = Rtr,
+            data = postDF)
+})
