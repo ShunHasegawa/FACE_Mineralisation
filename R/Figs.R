@@ -37,6 +37,9 @@ pl <- PltCO2Mean(TrtMean) +
   facet_grid(variable~., scales= "free_y", labeller= ylab_label)
 ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl, width = 6, height = 6)
 
+#######################
+# Plot soil variables #
+#######################
 
 ##########################
 ## Process raw TDR data ##
