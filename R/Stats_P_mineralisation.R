@@ -115,6 +115,13 @@ PltPrdVal(model = Fml_ancv, variable = "Temp_Mean",
           trans = Rtr,
           data = postDF)
 
+########################
+# Confidence intervals #
+########################
+# confidence interval for estimated parameters
+ciDF <- CIdf(model = Fml_ancv)
+
+Est.val <- ciDF
 
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
@@ -133,4 +140,5 @@ Anova(Iml_ancv)
 # The final model is:
 Fml_ancv@call
 Anova(Fml_ancv)
-PlPred
+Anova(Fml_ancv, test.statistic = "F")
+Est.val
