@@ -11,17 +11,16 @@ bxplts(value= "nitrification", ofst= .03, data= subset(mine, nitrification < max
 NitRmOl <- subset(mine, nitrification < max(nitrification))
 
 # different random factor strucures
-m1 <- lme(nitrification ~ co2 * time, random = ~1|ring/plot, data = NitRmOl)
-m2 <- lme(nitrification ~ co2 * time, random = ~1|ring, data = NitRmOl)
-m3 <- lme(nitrification ~ co2 * time, random = ~1|id, data = NitRmOl)
-anova(m1, m2, m3)
-# m2 is better
+m1 <- lme(nitrification ~ co2 * time, random = ~1|block/ring/plot, data = NitRmOl)
+RndmComp(m1)$anova
+# m5 is better but just use m1 this time
 
 # autocorelation
-atcr.cmpr(m2, rndmFac="ring")$models
-  # no need for correlation
+atml <- atcr.cmpr(m1)
+atml$models
+# no need for autocorrelation
 
-Iml <- m2
+Iml <- atml[[1]]
 
 # The starting model is:
 Iml$call
@@ -54,6 +53,12 @@ FACE_Mine_Nit_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, digit = 2)
 
 FACE_Mine_Nit_CntrstDf
 
+## ----Stat_FACE_Mine_P_min_withSoilvar
+
+##########
+# ANCOVA #
+##########
+# plot all variables
 
 ## ----Stat_FACE_Mine_NitrificationSmmry
 # The starting model is:
