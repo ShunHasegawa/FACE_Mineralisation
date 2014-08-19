@@ -67,7 +67,9 @@ Iml_ancv <- lmer(log(nitrification + .1) ~ co2 * (Moist + Temp_Mean) +
                    (1|block) + (1|ring) + (1|id), data = postDF)
 Fml_ancv <- stepLmer(Iml_ancv)
 Anova(Fml_ancv)
-Anova(Fml_ancv, test.statistic = "F")
+AnvF_Nit <- Anova(Fml_ancv, test.statistic = "F")
+AnvF_Nit
+
 plot(Fml_ancv)
 qqnorm(resid(Fml_ancv))
 qqline(resid(Fml_ancv))
@@ -96,6 +98,10 @@ Est.val <- rbind(
 )
 
 Est.val
+
+# reshape Est.val and make a table
+Est_Nit <- ANCV_Tbl(Est.val)
+
 
 ## ----Stat_FACE_Mine_NitrificationSmmry
 # The starting model is:

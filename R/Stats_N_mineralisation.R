@@ -69,7 +69,8 @@ Iml_ancv <- lmer(I(1/(n.min + .5)) ~ co2 * (Moist + Temp_Mean) +
 Anova(Iml_ancv)
 Fml_ancv <- stepLmer(Iml_ancv)
 Anova(Fml_ancv)
-Anova(Fml_ancv, test.statistic = "F")
+AnvF_Nmin <- Anova(Fml_ancv, test.statistic = "F")
+AnvF_Nmin
 plot(Fml_ancv)
 qqnorm(resid(Fml_ancv))
 qqline(resid(Fml_ancv))
@@ -92,6 +93,8 @@ ciDF <- CIdf(model = Fml_ancv)
 
 Est.val <- ciDF
 
+# reshape Est.val and make a table
+Est_Nmin <- ANCV_Tbl(Est.val)
 
 
 ## ----Stat_FACE_Mine_N_minSmmry

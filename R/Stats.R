@@ -36,3 +36,20 @@ source("R/Stats_N_mineralisation.R")
 # P mineralisation #
 ####################
 source("R/Stats_P_mineralisation.R")
+
+#######################
+# Summary Stats table #
+#######################
+# create summary list
+StatSmmryLst <- list("Nitrification" = list(AnvF_Nit, Est_Nit),
+                     "N_mineralisation" = list(AnvF_Nmin, Est_Nmin),
+                     "P_mineralisation" = list(AnvF_P, Est_P))
+
+
+# save in a single excel file
+wb <- createWorkbook()
+l_ply(c("Nitrification", "N_mineralisation", "P_mineralisation"), 
+      function(x) CrSheetAnvTbl(workbook = wb, 
+                                sheetName = x, 
+                                smmaryLst = StatSmmryLst))
+saveWorkbook(wb, "output//table/FACE_Minerlisation_Ancv.xlsx")

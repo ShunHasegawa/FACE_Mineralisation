@@ -86,7 +86,8 @@ Anova(m3)
 # final model
 Fml_ancv <- m3
 Anova(Fml_ancv)
-Anova(Fml_ancv, test.statistic = "F")
+AnvF_P <- Anova(Fml_ancv, test.statistic = "F")
+AnvF_P
 
 # main effects
 plot(allEffects(Fml_ancv))
@@ -95,8 +96,8 @@ plot(allEffects(Fml_ancv))
 plot(Fml_ancv)
 qqnorm(resid(Fml_ancv))
 qqline(resid(Fml_ancv))
-  # not very good... Other transformations (log(Moist), (p.min + .1)^(-2)) were
-  # teste. They improved the model but didn't sinificantly change the final
+  # not very good... Other transformations (log(Moist), (p.min + .1)^(-2)) were 
+  # teste. They improved the model but didn't sinificantly change the final 
   # interpretation so just use the simple one.
 
 ######################################
@@ -119,6 +120,9 @@ l_ply(c("Moist", "Temp_Mean"), function(x){
 ciDF <- CIdf(model = Fml_ancv)
 
 Est.val <- ciDF
+
+# reshape Est.val and make a table
+Est_P <- ANCV_Tbl(Est.val)
 
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
