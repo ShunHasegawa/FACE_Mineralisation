@@ -37,6 +37,17 @@ pl <- PltCO2Mean(TrtMean) +
   facet_grid(variable~., scales= "free_y", labeller= ylab_label)
 ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl, width = 6, height = 6)
 
+########################
+# Plot for publication #
+########################
+# theme
+p <- WBFig(data = TrtMean, 
+           ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")),
+           facetLab = ylab_label)
+ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", plot = p, width = 6, height = 6)
+
+
+
 #######################
 # Plot soil variables #
 #######################
