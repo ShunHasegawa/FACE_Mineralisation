@@ -91,7 +91,7 @@ Crt_SmryDF <- function(data, val = "value"){
 ####################
 PltMean <- function(data, ...){
   
-  vars <- paste("Net", c("nitrification", "N_mineralisation", "P_mineralisation"), "rates")
+  vars <- paste("Net", c("nitrification", "N mineralisation", "P mineralisation"), "rates")
                 
   # subsitute returens argument as it is without calculation (similar to expression())
   

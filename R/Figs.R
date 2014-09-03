@@ -25,8 +25,8 @@ l_ply(1:3, function(x) ggsavePP(filename = fls[x], plot = TrtFg[[x]], width = 6,
 # labels for facet_grid
 ylabs <- list(
   'nitrification' = expression(Net~nitrification~rate),
-  'nh' = expression(Net~N_mineralisation~rate),
-  'po' = expression(Net~P_mineralisation~rate)
+  'nh' = expression(Net~N~mineralisation~rate),
+  'po' = expression(Net~P~mineralisation~rate)
   )
 
 ylab_label <- function(variable, value){
