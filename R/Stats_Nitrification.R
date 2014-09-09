@@ -10,43 +10,35 @@ bxplts(value= "nitrification", ofst= .03, data= subset(mine, nitrification < max
 
 NitRmOl <- subset(mine, nitrification < max(nitrification))
 
-# different random factor strucures
-m1 <- lme(nitrification ~ co2 * time, random = ~1|block/ring/plot, data = NitRmOl)
-RndmComp(m1)$anova
-# m5 is better but just use m1 this time
+# the inital model
+Iml <- lmer(nitrification ~ co2 * time + (1|block) + (1|ring) + (1|id),
+            data = NitRmOl)
 
-# autocorelation
-atml <- atcr.cmpr(m1)
-atml$models
-# no need for autocorrelation
-
-Iml <- atml[[1]]
-
-# The starting model is:
-Iml$call
 Anova(Iml)
+Anova(Iml, test.statistic = "F")
+# interactive effect so keep it
 
-# model simplification
-MdlSmpl(Iml)
-  # no factor was removed
-
-Fml <- MdlSmpl(Iml)$model.reml
-
-# The final model is:
-Fml$call
-
+# The final model
+Fml <- Iml
 Anova(Fml)
+AnvF_Nit_time <- Anova(Fml, test.statistic = "F")
+AnvF_Nit_time
 
 summary(Fml)
 
 # model diagnosis
 plot(Fml)
-qqnorm(Fml, ~ resid(.)|id)
-qqnorm(residuals.lm(Fml))
-qqline(residuals.lm(Fml))
+# little wedge-shaped
+qqnorm(residuals(Fml))
+qqline(residuals(Fml))
 
-# Contrast
-cntrst<- contrast(Fml, 
+############
+# Contrast #
+############
+# contrast doesn't work with lmer so use lme
+LmeMod <- lme(nitrification ~ co2 * time, random = ~1|block/ring/plot, data = NitRmOl)
+
+cntrst<- contrast(LmeMod, 
                   a = list(time = levels(NitRmOl$time), co2 = "amb"),
                   b = list(time = levels(NitRmOl$time), co2 = "elev"))
 FACE_Mine_Nit_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, digit = 2)
@@ -105,16 +97,20 @@ Est_Nit <- ANCV_Tbl(Est.val)
 
 ## ----Stat_FACE_Mine_NitrificationSmmry
 # The starting model is:
-Iml$call
-xtable(Anova(Iml), floating = FALSE)
+Iml@call
+Anova(Iml)
 
 # The final model is:
-Fml$call
-xtable(Anova(Fml), floating = FALSE)
+Fml@call
+
+# Chi-squre
+Anova(Fml)
+
+# F test
+AnvF_Nit_time
 
 # Contrast
-print(xtable(FACE_Mine_Nit_CntrstDf, floating = FALSE), 
-      include.rownames = FALSE)
+FACE_Mine_Nit_CntrstDf
 
 ## ----Stat_FACE_Mine_Nitrification_withSoilvarSmmry
 # The initial model:
@@ -123,8 +119,12 @@ Anova(Iml_ancv)
 
 # The final model is:
 Fml_ancv@call
+
+# Chi-squre
 Anova(Fml_ancv)
-Anova(Fml_ancv, test.statistic = "F")
+
+# F test
+AnvF_Nit
 
 # Plot predicted values
 Rtr <- function(x) exp(x + .1)

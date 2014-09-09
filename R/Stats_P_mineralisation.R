@@ -7,41 +7,57 @@ bxcxplts(value= "p.min", data= mine, sval = .0192, fval = .1, lambda = seq(-3, 2
 bxplts(value= "p.min", ofst= .1, data= mine, lambda = seq(-3, -1, 1/10))
   # use box-cox lambda
 
-# different random factor strucures
-m1 <- lme((p.min + .1)^(-2) ~ co2 * time, random = ~1|block/ring/plot, data = mine)
-RndmComp(m1)$anova
-# m5 is better, but use m1 for time being
-
-# autocorelation
-atml <- atcr.cmpr(m1)
-atml$models
-# model 5 looks best
-
-Iml <- atml[[5]]
-
-# The starting model is:
-Iml$call
+# the inital model
+Iml <- lmer((p.min + .1)^(-2) ~ co2 * time + (1|block) + (1|ring) + (1|id),
+            data = mine)
+Iml <- lmer(log(p.min + .1) ~ co2 * time + (1|block) + (1|ring) + (1|id),
+            data = mine)
 Anova(Iml)
+# no huge difference in results between the above transformations so just use
+# log for simplicity
 
-# model simplification
-MdlSmpl(Iml)
-  # time:co2 and co2 are removed
+# marginally significantl time x co2 so keep
 
-Fml <- MdlSmpl(Iml)$model.reml
-
-# The final model is:
-Fml$call
-
+# The final model is
+Fml <- Iml
 Anova(Fml)
+AnvF_Pmin_time <- Anova(Fml, test.statistic = "F")
+AnvF_Pmin_time
 
 summary(Fml)
 
+############
+# Contrast #
+############
+# contrast doesn't work with lmer so use lme
+
+# LmeMod <- lme(log(p.min + .1) ~ co2 * time, random = ~1|block/ring/plot, data 
+# = mine) 
+# The above model will get the error message: Error in testStatistic(fit, X,
+# modelCoef, covMat, conf.int = conf.int) : Non-positive definite approximate
+# variance-covariance so make new data frame with reordered factor levels
+
+newDF <- within(mine,{
+  co2 <- relevel(co2, "elev")
+  time <- relevel(time, "2")
+})
+
+LmeMod <- lme(log(p.min + .1) ~ co2 * time, random = ~1|block/ring/plot, 
+              data = newDF) 
+
+cntrst<- contrast(LmeMod, 
+                  a = list(time = levels(NitRmOl$time), co2 = "amb"),
+                  b = list(time = levels(NitRmOl$time), co2 = "elev"))
+
+FACE_Mine_P_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, digit = 2)
+
+FACE_Mine_P_CntrstDf
+
+
 # model diagnosis
 plot(Fml)
-# little wedge-shaped
-qqnorm(Fml, ~ resid(.)|ring)
-qqnorm(residuals.lm(Fml))
-qqline(residuals.lm(Fml))
+qqnorm(residuals(Fml))
+qqline(residuals(Fml))
 
 ## ----Stat_FACE_Mine_P_min_withSoilvar
 
@@ -126,12 +142,20 @@ Est_P <- ANCV_Tbl(Est.val)
 
 ## ----Stat_FACE_Mine_P_minSmmry
 # The starting model is:
-Iml$call
+Iml@call
 Anova(Iml)
 
 # The final model is:
-Fml$call
+Fml@call
+
+# Chi-squre
 Anova(Fml)
+
+# F test
+AnvF_Pmin_time
+
+# contrast
+FACE_Mine_P_CntrstDf
 
 ## ----Stat_FACE_Mine_P_min_withSoilvarSmmry
 # The initial model:
@@ -140,8 +164,12 @@ Anova(Iml_ancv)
 
 # The final model is:
 Fml_ancv@call
+
+# Chi-squre
 Anova(Fml_ancv)
-Anova(Fml_ancv, test.statistic = "F")
+
+# F test
+AnvF_P
 
 # 95% CI
 Est.val
