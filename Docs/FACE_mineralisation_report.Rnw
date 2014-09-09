@@ -17,25 +17,10 @@ opts_knit$set(root.dir=normalizePath('../'))
 
 
 <<readFiles, include=FALSE>>=
-library(car)
-library(gmodels)
-library(lme4)
-library(lubridate)
-library(MASS)
-library(nlme)
-library(packrat)
-library(plyr)
-library(reshape)
-library(xlsx)
-library(contrast)
-library(effects)
-library(ggplot2)
-library(scales)
-library(xtable)
-library(visreg)
-library(pbkrtest)
-library(lmerTest)
+.libPaths("packrat/lib/x86_64-w64-mingw32//3.1.1")
+# use packages from packrat library 
 
+source("R/pckg.R")
 source("R//function.R")
 load("output//data//FACE_mineralisation.RData")
 load("output//data/postDF.RData")

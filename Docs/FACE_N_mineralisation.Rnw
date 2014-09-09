@@ -5,6 +5,7 @@
 %% need to be loaded here if one wants to compile this child document to PDF %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 % <<setup, include=FALSE>>=
 % opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
 % opts_knit$set(root.dir=normalizePath('../'))
@@ -12,31 +13,17 @@
 % 
 % 
 % <<readFiles, include=FALSE>>=
-% library(car)
-% library(gmodels)
-% library(lme4)
-% library(lubridate)
-% library(MASS)
-% library(nlme)
-% library(packrat)
-% library(plyr)
-% library(reshape)
-% library(xlsx)
-% library(contrast)
-% library(effects)
-% library(ggplot2)
-% library(scales)
-% library(xtable)
-% library(visreg)
-% library(pbkrtest)
-% library(lmerTest)
+% .libPaths("packrat/lib/x86_64-w64-mingw32//3.1.1")
+% # use packages from packrat library 
 % 
+% source("R/pckg.R")
 % source("R//function.R")
 % load("output//data//FACE_mineralisation.RData")
 % load("output//data/postDF.RData")
 % source("R//SummaryExlTable.R")
 % source("R//Figs.R")
 % @
+
 
 \subsection{N Mineralisation}
 
@@ -78,7 +65,7 @@ source("R/Stats_N_mineralisation.R")
 % Summary %
 %%%%%%%%%%%
 
-<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='asis'>>=
+<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='markup'>>=
 @
 
 \paragraph{ANCOVA with soil variables}
