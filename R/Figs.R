@@ -9,42 +9,59 @@ TrtMean <- TrtMean <- ddply(RngMean, .(time, date, co2, variable), function(x) C
 #################################
 # plot each nutrient separately #
 #################################
-vars <- c("Nitrification", "N_mineralisation", "P_minerlisation")
+vars <- c("N_mineralisation","Nitrification",  "Ammonification", "P_minerlisation")
 
 RngFg <- dlply(RngMean, .(variable), PltRnghMean)
 fls <- paste("output//figs/FACE_mineralisation_Ring_", vars, sep = "")
-l_ply(1:3, function(x) ggsavePP(filename = fls[x], plot = RngFg[[x]], width = 6, height = 3))
+l_ply(1:4, function(x) ggsavePP(filename = fls[x], plot = RngFg[[x]], width = 6, height = 3))
 
 TrtFg <- dlply(TrtMean, .(variable), PltCO2Mean)
 fls <- paste("output//figs/FACE_mineralisation_CO2_", vars, sep = "")
-l_ply(1:3, function(x) ggsavePP(filename = fls[x], plot = TrtFg[[x]], width = 6, height = 3))
+l_ply(1:4, function(x) ggsavePP(filename = fls[x], plot = TrtFg[[x]], width = 6, height = 3))
 
 ##################################
 # plot all nutrient in one graph #
 ##################################
 # labels for facet_grid
-ylabs <- list(
-  'nitrification' = expression(Net~nitrification~rate),
-  'nh' = expression(Net~N~mineralisation~rate),
-  'po' = expression(Net~P~mineralisation~rate)
-  )
+plDF <- TrtMean
+# change labels for variables
+plDF$variable <- factor(plDF$variable, 
+                        labels = paste("Net", c("N mineralisation", 
+                                                "nitrification",
+                                                "ammonification",
+                                                "P mineralisation"),
+                                       "rate"))
 
-ylab_label <- function(variable, value){
-  return(ylabs[value])
-}
+## Blank data frame ##
+# Create dataframe to define y range for each plot. This data frame actually
+# doesn't plot anything but enable one to define y range (or x range if one likes)
 
-pl <- PltCO2Mean(TrtMean) +
-  facet_grid(variable~., scales= "free_y", labeller= ylab_label)
-ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl, width = 6, height = 6)
+# N range
+Nrng <- with(subsetD(plDF, variable != "P mineralisation"), 
+             c(min(Mean - SE), max(Mean + SE)))
+
+blankDF <- data.frame(date = plDF$date[1], 
+                      variable = unique(plDF$variable),
+                      Mean = c(rep(Nrng[1], 3), 0,
+                               rep(Nrng[2], 3), 0),
+                      co2 = "amb")
+
+pl <- PltCO2Mean(plDF) + 
+  geom_blank(aes(x = date, y = Mean), data = blankDF) +
+  facet_wrap(~variable, ncol = 2, scal = "free_y")
+  
+ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl, 
+         width = 6, height = 4)
 
 ########################
 # Plot for publication #
 ########################
 # theme
-p <- WBFig(data = TrtMean, 
-           ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")),
-           facetLab = ylab_label)
-ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", plot = p, width = 6, height = 6)
+p <- WBFig(data = plDF, 
+           ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")))
+
+ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
+         plot = p, width = 6, height = 5)
 
 
 

@@ -91,7 +91,8 @@ Crt_SmryDF <- function(data, val = "value"){
 ####################
 PltMean <- function(data, ...){
   
-  vars <- paste("Net", c("nitrification", "N mineralisation", "P mineralisation"), "rates")
+  vars <- paste("Net", c("nitrification", "N mineralisation", 
+                         "P mineralisation", "ammonification"), "rates")
                 
   # subsitute returens argument as it is without calculation (similar to expression())
   
@@ -103,13 +104,13 @@ PltMean <- function(data, ...){
   # atop: put the 1st argument on top of the 2nd
   
   # create ylab according to variable
-  ntrs <- c("nitrification", "n.min", "p.min")
+  ntrs <- c("nitrification", "n.min", "p.min", "ammonification")
   
   # when plotting multiple variables at the same time
   if(length(unique(data$variable)) > 1) 
     ylab <- expression((mg~DW_kg^"-1"~d^"-1")) else {
       # only one variable
-      for (i in 1:3){
+      for (i in 1:4){
         if(unique(data$variable) == ntrs[i]) ylab  <- ylabs[[i]]
       }
     }
@@ -171,16 +172,33 @@ PltCO2Mean <- function(data){
 science_theme <- theme(panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(),
                        axis.text.x  = element_text(angle=45, vjust= 1, hjust = 1),
-                       legend.position = c(.3, .93), 
-                       legend.title = element_blank())
+                       legend.position = c(.2, .38), 
+                       legend.title = element_blank(),
+                       legend.background = element_blank())
 
 # white-black figure
-WBFig <- function(data, ylab, facetLab = ylab_label, figTheme = science_theme){
+WBFig <- function(data, ylab, figTheme = science_theme){
+    
+  # Blank data frame: defining the constant y range for N related mineralisation
+  # N range
+  Nrng <- with(subsetD(data, variable != "Net P mineralisation rate"), 
+               c(min(Mean - SE), max(Mean + SE)))
+  
+  blankDF <- data.frame(date = as.Date("2012-6-15"), 
+                        variable = unique(data$variable),
+                        Mean = c(rep(Nrng[1], 3), 0,
+                                 rep(Nrng[2], 3), 0),
+                        co2 = "amb")
+  
+  # P max
+  Pmax <- with(subsetD(data, variable == "Net P mineralisation rate"), 
+               max(Mean + SE, na.rm = TRUE))
   
   # df for sub labels
   subLabDF <- with(data, 
                    data.frame(xv = as.Date("2012-6-15"),
-                              ddply(data, .(variable), summarise, yv = max(Mean + SE)),
+                              variable = levels(variable),
+                              yv = c(rep(Nrng[2], 3), Pmax),
                               labels = LETTERS[1:length(levels(variable))],
                               co2 = "amb"))
     # co2 is required as group = co2 is used in the main plot mapping
@@ -198,17 +216,17 @@ WBFig <- function(data, ylab, facetLab = ylab_label, figTheme = science_theme){
     scale_x_date(breaks= date_breaks("2 month"),
                  labels = date_format("%b-%y"),
                  limits = as.Date(c("2012-6-15", "2014-4-2"))) +
-    scale_shape_manual(values = c(24, 21), labels = c("Ambient", expression(eCO[2]))) +
+    scale_shape_manual(values = c(24, 21), 
+                       labels = c("Ambient", expression(eCO[2]))) +
     scale_fill_manual(values = c("black", "white"), 
                       labels = c("Ambient", expression(eCO[2]))) +
     scale_linetype_manual(values = c("solid", "dashed"), 
                           labels = c("Ambient", expression(eCO[2]))) +
-    facet_grid(variable~., scales= "free_y", labeller= facetLab) +
     geom_text(aes(x = xv, y = yv * .95, label = labels),
               fontface = "bold",
-              hjust = 1,
               data = subLabDF) +
-    facet_grid(variable~., scales= "free_y", labeller= facetLab) +
+    facet_wrap(~variable, scales= "free_y") +
+    geom_blank(aes(x = date, y = Mean), data = blankDF) +
     figTheme
   return(p2)
 }
