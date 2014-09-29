@@ -12,6 +12,9 @@ mine <- within(mine, {
   insertion <- as.Date(dmy(insertion))
   sampling <- as.Date(dmy(sampling))
   
+  # ammonification
+  ammonification <- n.min - nitrification
+  
   # id for later analysis
   id <- ring:plot
   
