@@ -5,6 +5,7 @@ theme_set(theme_bw()) # graphic backgroud is white
 ######################
 RngMean <- ddply(mineMlt, .(time, date, co2, ring, variable), Crt_SmryDF) 
 TrtMean <- TrtMean <- ddply(RngMean, .(time, date, co2, variable), function(x) Crt_SmryDF(x, val = "Mean"))
+save(TrtMean, file = "output//data/FACE_Mineralisation_CO2Mean.RData")
 
 #################################
 # plot each nutrient separately #
