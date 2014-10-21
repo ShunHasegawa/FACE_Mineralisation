@@ -103,7 +103,7 @@ Est.val <- ciDF
 Est_Amm <- ANCV_Tbl(Est.val)
 
 
-## ----Stat_FACE_Mine_N_minSmmry
+## ----Stat_FACE_Mine_AmmonificationSmmry
 # The starting model is:
 Iml@call
 Anova(Iml)
@@ -120,7 +120,7 @@ AnvF_Amm_time
 # Contrast
 FACE_Mine_Amm_CntrstDf
 
-## ----Stat_FACE_Mine_N_min_withSoilvarSmmry
+## ----Stat_FACE_Mine_Ammonification_withSoilvarSmmry
 # The initial model:
 Iml_ancv@call
 Anova(Iml_ancv)
