@@ -53,20 +53,26 @@ source("R//Figs.R")
 \end{figure}
 \end{center}
 
-%%%%%%%%%%%
-% Nitrate %
-%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%
+% Nitrification %
+%%%%%%%%%%%%%%%%%
 \Sexpr{knit_child('FACE_nitrification.Rnw')}
 
-%%%%%%%%%%%%
-% Ammonium %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% N mineralisation %
+%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \Sexpr{knit_child('FACE_N_mineralisation.Rnw')}
 
-%%%%%%%%%%%%%
-% Phosphate %
-%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+% Ammonification %
+%%%%%%%%%%%%%%%%%%
+\clearpage
+\Sexpr{knit_child('FACE_Ammonification.Rnw')}
+
+%%%%%%%%%%%%%%%%%%%%
+% P mineralisation %
+%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \Sexpr{knit_child('FACE_P_mineralisation.Rnw')}
 
