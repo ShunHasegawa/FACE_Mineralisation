@@ -37,12 +37,6 @@ Version: 0.19
 Hash: 7e27628150aa6b3c0d683a007a290023
 Requires: rms
 
-Package: devtools
-Source: CRAN
-Version: 1.5
-Hash: d8c2ffc3d991d1b1a8625919b8be3f4c
-Requires: digest, evaluate, httr, memoise, RCurl, whisker
-
 Package: dichromat
 Source: CRAN
 Version: 2.0-0
@@ -120,17 +114,6 @@ Version: 3.14-4
 Hash: 5f8029a6a25b12ca0cf92924d928a791
 Requires: cluster, Formula, lattice, latticeExtra, survival
 
-Package: httr
-Source: CRAN
-Version: 0.4
-Hash: 0fe56eff828423386ce2f71e055572a3
-Requires: digest, jsonlite, RCurl, stringr
-
-Package: jsonlite
-Source: CRAN
-Version: 0.9.10
-Hash: 6e69e79691b668042c7f022bb680bba5
-
 Package: KernSmooth
 Source: CRAN
 Version: 2.23-12
@@ -138,8 +121,8 @@ Hash: 1df4a72cda27f00d2ae7da63bbb12a93
 
 Package: knitr
 Source: CRAN
-Version: 1.6
-Hash: 0f6457facba94bccad17a7c67c2f4168
+Version: 1.7
+Hash: 2711841bd9ede48d13c4d14abc452b54
 Requires: digest, evaluate, formatR, highr, markdown, stringr
 
 Package: labeling
@@ -279,12 +262,6 @@ Version: 0.3.2.1.2
 Hash: 31072bd8091768db4f7da2adc592feb7
 Requires: Matrix, Rcpp
 
-Package: RCurl
-Source: CRAN
-Version: 1.95-4.3
-Hash: 158377109f939084a72f240125f821d3
-Requires: bitops
-
 Package: reshape
 Source: CRAN
 Version: 0.8.5
@@ -334,11 +311,6 @@ Source: CRAN
 Version: 2.0-5
 Hash: ade5ce57386b7e16748f35b8e1134cdd
 Requires: lattice
-
-Package: whisker
-Source: CRAN
-Version: 0.3-2
-Hash: 186ab2937fec1694c8a63009a2389c4e
 
 Package: xlsx
 Source: CRAN
