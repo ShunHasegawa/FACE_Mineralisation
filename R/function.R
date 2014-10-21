@@ -502,3 +502,8 @@ CrSheetAnvTbl <- function(workbook, sheetName, smmaryLst){
   addDataFrame(smmaryLst[[sheetName]][[2]], sheet, showNA = FALSE, 
                row.names = FALSE, characterNA="NA", startRow = 11)
 }
+
+###############################
+# Compute sqrR for lmer model #
+###############################
+source("R/rsquaredglmm.R")
