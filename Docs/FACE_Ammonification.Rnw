@@ -1,0 +1,104 @@
+\Sexpr{set_parent('FACE_mineralisation_report.Rnw')}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% source files & libraries & setup options                                  %%
+%% need to be loaded here if one wants to compile this child document to PDF %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% <<setup, include=FALSE>>=
+% opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
+% opts_knit$set(root.dir=normalizePath('../'))
+% @
+% 
+% 
+% <<readFiles, include=FALSE>>=
+% .libPaths("packrat/lib/x86_64-w64-mingw32//3.1.1")
+% # use packages from packrat library 
+% 
+% source("R/pckg.R")
+% source("R//function.R")
+% load("output//data//FACE_mineralisation.RData")
+% load("output//data/postDF.RData")
+% source("R//SummaryExlTable.R")
+% source("R//Figs.R")
+% @
+
+
+\subsection{Ammonification}
+
+%%% CO2 trt %%%
+\subsubsection{CO$_2$ trt}
+
+\begin{figure}[!h]\label{figure:CO2Ammonification}
+
+\begin{center}
+
+<<Fig_FACE_CO2_Mine_Ammonification, echo=FALSE, fig.height=3, fig.width=6>>=
+TrtFg[[3]]
+@
+
+\caption{Ammonification rates at CO$_2$ treatments}
+\end{center}
+\end{figure}
+
+<<Table_FACE_CO2_Mine_Ammonification, echo=FALSE, results='asis'>>=
+printTbl(TrtSmmryTbl[[3]], 
+         caption = "CO2 trt mean of Ammonificaiton",
+         label = "table:FACE_CO2_Ammonification")
+@
+
+%%%%%%%%%%%
+%% Stats %%
+%%%%%%%%%%%
+
+<<ReadScript_FACE_Mine_Ammonification, echo=FALSE, cache=FALSE, include=FALSE>>=
+read_chunk('R/Stats_Ammonification.R')
+source("R/Stats_Ammonification.R")
+@
+
+\clearpage
+\paragraph{Stats}
+\noindent
+
+%%%%%%%%%%%
+% Summary %
+%%%%%%%%%%%
+
+<<Stat_FACE_Mine_AmmonificationSmmry, echo=TRUE, results='markup'>>=
+@
+
+\paragraph{ANCOVA with soil variables}
+\noindent
+<<Stat_FACE_Mine_Ammonification_withSoilvarSmmry, echo=TRUE, results='markup'>>=
+@
+
+%%%%%%%%%%
+% Detail %
+%%%%%%%%%%
+
+%<<Stat_FACE_Mine_Ammonification, echo=TRUE, results='markup'>>=
+%@
+
+
+%%% Ring %%%
+\clearpage
+\subsubsection{Ring}
+
+\begin{figure}[!h]\label{figure:RingAmmonification}
+\begin{center}
+
+<<Fig_FACE_Ring_Mine_Ammonification, echo=FALSE, fig.height=3, fig.width=6>>=
+RngFg[[3]]
+@
+
+\caption{Ammonificaiton rates in each ring}
+\end{center}
+\end{figure}
+
+<<Table_FACE_Ring_Mine_Ammonification, echo=FALSE, results='asis'>>=
+printRngTbl(RngSmmryTbl[[3]], 
+            caption = "Ring mean of Ammonificaiton", 
+            label = "table:FACE_ring_Ammonification",
+            size = "small")
+@
