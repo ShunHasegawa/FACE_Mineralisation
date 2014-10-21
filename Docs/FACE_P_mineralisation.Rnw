@@ -16,7 +16,7 @@
 \begin{center}
 
 <<Fig_FACE_CO2_Mine_P_min, echo=FALSE, fig.height=3, fig.width=6>>=
-TrtFg[[3]]
+TrtFg[[4]]
 @
 
 \caption{P mineralisation rates at CO$_2$ treatments}
@@ -24,7 +24,7 @@ TrtFg[[3]]
 \end{figure}
 
 <<Table_FACE_CO2_Mine_P_min, echo=FALSE, results='asis'>>=
-printTbl(TrtSmmryTbl[[3]], 
+printTbl(TrtSmmryTbl[[4]], 
          caption = "CO2 trt mean of P mineralisation",
          label = "table:FACE_CO2_P_min")
 @
@@ -66,7 +66,7 @@ source("R/Stats_P_mineralisation.R")
 \begin{center}
 
 <<Fig_FACE_Ring_Mine_P_min, echo=FALSE, fig.height=3, fig.width=6>>=
-RngFg[[3]]
+RngFg[[4]]
 @
 
 \caption{P mineralisation rates in each ring}
@@ -74,7 +74,7 @@ RngFg[[3]]
 \end{figure}
 
 <<Table_FACE_Ring_Mine_P_min, echo=FALSE, results='asis'>>=
-printRngTbl(RngSmmryTbl[[3]], 
+printRngTbl(RngSmmryTbl[[4]], 
             caption = "Ring mean of P mineralisation", 
             label = "table:FACE_ring_P_min",
             size = "small")
