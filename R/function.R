@@ -507,3 +507,30 @@ CrSheetAnvTbl <- function(workbook, sheetName, smmaryLst){
 # Compute sqrR for lmer model #
 ###############################
 source("R/rsquaredglmm.R")
+
+################################
+# Return star based on P value #
+################################
+PvalStar <- function(Pval) {
+  ifelse(Pval > .1, "",
+         ifelse(Pval > .05, ".",
+                ifelse(Pval > .01, "*",
+                       ifelse(Pval > .001, "**",
+                              "***"))))
+} 
+
+########################################
+# Create summary stat table from anova #
+########################################
+StatTable <- function(x, variable) { # x is anova result
+  df <- data.frame(predictor = row.names(x),
+                   Pval = round(x$Pr, 3),
+                   star = PvalStar(x$Pr))
+  result <- merge(df, data.frame(predictor = c("co2", "time", "co2:time")), all.y = TRUE)
+  result$predictor <- factor(result$predictor, 
+                             labels = c(expression(CO[2]), "Time", expression(CO[2]*xTime)), 
+                             levels = c("co2", "time", "co2:time"))
+  result$variable <- variable
+  result <- result[order(result$predictor), ]
+  return(result)
+}
