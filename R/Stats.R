@@ -68,4 +68,4 @@ CO2TimeStatList <- list(nitrification = AnvF_Nit_time,
 
 Stat_CO2Time <- ldply(names(CO2TimeStatList), 
                       function(x) StatTable(CO2TimeStatList[[x]], variable = x))
-
+save(Stat_CO2Time, file = "output//dataCO2Time_Stat.RData")
