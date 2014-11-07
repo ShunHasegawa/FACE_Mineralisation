@@ -3,7 +3,6 @@ rm(list=ls(all=TRUE))
 source("R/pckg.R")
 
 source("R/function.R")
-source("R/rsquaredglmm.R")
 
 ######################
 # Process data frame #
