@@ -126,6 +126,9 @@ Anova(Fml_ancv)
 # F test
 AnvF_Nit
 
+# squared R
+rsquared.glmm(Fml_ancv)
+
 # Plot predicted values
 Rtr <- function(x) exp(x + .1)
 PltPrdVal(model = Fml_ancv, variable = "Moist", 

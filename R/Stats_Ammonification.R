@@ -134,6 +134,9 @@ Anova(Fml_ancv)
 # F test
 AnvF_Amm
 
+# squared R
+rsquared.glmm(Fml_ancv)
+
 # Plot predicted values
 par(mfrow = c(1,2))
 l_ply(c("logMoist", "Temp_Mean"), function(x) 

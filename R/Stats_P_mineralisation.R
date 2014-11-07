@@ -171,6 +171,9 @@ Anova(Fml_ancv)
 # F test
 AnvF_P
 
+# squared R
+rsquared.glmm(Fml_ancv)
+
 # 95% CI
 Est.val
 

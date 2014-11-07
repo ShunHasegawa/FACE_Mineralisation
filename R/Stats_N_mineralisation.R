@@ -116,6 +116,9 @@ Anova(Fml_ancv)
 # F test
 AnvF_Nmin
 
+# squared R
+rsquared.glmm(Fml_ancv)
+
 # Plot predicted values
 Rtr <- function(x) 1/x - .5
 par(mfrow = c(1,2))
