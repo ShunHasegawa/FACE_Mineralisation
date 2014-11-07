@@ -32,6 +32,11 @@ source("R//Stats_Nitrification.R")
 ####################
 source("R/Stats_N_mineralisation.R")
 
+##################
+# Ammonification #
+##################
+source("R/Stats_Ammonification.R")
+
 ####################
 # P mineralisation #
 ####################
@@ -40,7 +45,7 @@ source("R/Stats_P_mineralisation.R")
 #######################
 # Summary Stats table #
 #######################
-# create summary list
+# create summary list for LMM with soil variable
 StatSmmryLst <- list("Nitrification" = list(AnvF_Nit, Est_Nit),
                      "N_mineralisation" = list(AnvF_Nmin, Est_Nmin),
                      "P_mineralisation" = list(AnvF_P, Est_P))
@@ -53,3 +58,14 @@ l_ply(c("Nitrification", "N_mineralisation", "P_mineralisation"),
                                 sheetName = x, 
                                 smmaryLst = StatSmmryLst))
 saveWorkbook(wb, "output//table/FACE_Minerlisation_Ancv.xlsx")
+
+
+# create stat summary table for LMM with CO2 and time
+CO2TimeStatList <- list(nitrification = AnvF_Nit_time, 
+                        ammonification = AnvF_Amm_time, 
+                        n.min = AnvF_Nmin_time, 
+                        p.min = AnvF_Pmin_time)
+
+Stat_CO2Time <- ldply(names(CO2TimeStatList), 
+                      function(x) StatTable(CO2TimeStatList[[x]], variable = x))
+
