@@ -61,12 +61,6 @@ ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl,
 load("output/data/CO2Time_Stat.RData") 
   # Note if I need most updated summary, I need to run Stat.R first
 
-Stat_CO2Time$variable <- recode(Stat_CO2Time$variable, 
-                                "'nitrification' = 'Net nitrification rate'; 
-                                'ammonification' = 'Net ammonification rate';
-                                'n.min' = 'Net N mineralisation rate';
-                                'p.min' = 'Net P mineralisation rate'")
-
 p <- WBFig(data = plDF, 
            ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")),
            StatRes = Stat_CO2Time, 
