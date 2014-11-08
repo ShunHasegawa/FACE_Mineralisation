@@ -61,11 +61,11 @@ saveWorkbook(wb, "output//table/FACE_Minerlisation_Ancv.xlsx")
 
 
 # create stat summary table for LMM with CO2 and time
-CO2TimeStatList <- list(nitrification = AnvF_Nit_time, 
-                        ammonification = AnvF_Amm_time, 
-                        n.min = AnvF_Nmin_time, 
-                        p.min = AnvF_Pmin_time)
+CO2TimeStatList <- list('Net nitrification rate' = AnvF_Nit_time, 
+                        'Net ammonification rate' = AnvF_Amm_time, 
+                        'Net N mineralisation rate' = AnvF_Nmin_time, 
+                        'Net P mineralisation rate' = AnvF_Pmin_time)
 
 Stat_CO2Time <- ldply(names(CO2TimeStatList), 
                       function(x) StatTable(CO2TimeStatList[[x]], variable = x))
-save(Stat_CO2Time, file = "output//dataCO2Time_Stat.RData")
+save(Stat_CO2Time, file = "output//data/CO2Time_Stat.RData")
