@@ -292,9 +292,9 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
 }
 
 
-########################################
-# Create df to add an table to figures #
-########################################
+############################################
+# Create df to add a stat table to figures #
+############################################
 StatPositionDF <- function(StatRes, variable, ytop, ymax){
   d <- data.frame(variable, ytop, gap = 0.08 * ymax) 
     # ytop is y coordinate for the top (i.e. CO2) of the table for each fig 
