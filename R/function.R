@@ -169,20 +169,17 @@ PltCO2Mean <- function(data){
 # Return star based on P value #
 ################################
 FormatPval <- function(Pval) {
-  stars <- ifelse(is.na(Pval), "ns",
-                  ifelse(Pval > .1, "ns",
-                         ifelse(Pval > .05, ".",
-                                ifelse(Pval > .01, "*",
-                                       ifelse(Pval > .001, "**",
-                                              c("***"))))))
+  stars <- ifelse(Pval > .1, "ns",
+                  ifelse(Pval > .05, ".",
+                         ifelse(Pval > .01, "*",
+                                ifelse(Pval > .001, "**",
+                                       c("***")))))
   
-  p <- as.character(ifelse(is.na(Pval), "ns",
-                           ifelse(Pval > .1, round(Pval, 3),
-                                  ifelse(Pval < .001, "bold('<0.001')", 
-                                         # shown with bold font. Note that
-                                         # inside of bold needs to be in ''
-                                         paste("bold(", round(Pval, 3), ")", sep = "'")
-                                  ))))
+  p <- as.character(ifelse(Pval > .1, round(Pval, 3),
+                           ifelse(Pval < .001, "bold('<0.001')", 
+                                  # shown with bold font. Note that inside of
+                                  # bold needs to be in ''
+                                  paste("bold(", round(Pval, 3), ")", sep = "'"))))
   return(data.frame(stars, p))
 } 
 
@@ -200,6 +197,14 @@ StatTable <- function(x, variable) { # x is anova result
   
   result <- merge(df, data.frame(predictor = c("co2", "time", "co2:time")), all = TRUE)
   
+  # replace NA with ns
+  result <- within(result, {
+    p <- ifelse(is.na(p), "ns", as.character(p)) 
+    # ifelse tries to return factor, so use as.character
+    stars <- ifelse(is.na(stars), "ns", as.character(stars))
+  })
+  
+  # relabel for plotting
   result$predictor <- factor(result$predictor, 
                              labels = c("", "CO[2]", "Time", "CO[2]*~x~Time"), 
                              levels = c("", "co2", "time", "co2:time"))
