@@ -232,7 +232,7 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
   # Blank data frame: defining the constant y range for N related mineralisation
   # N range
   Nrng <- with(subsetD(data, variable != "Net P mineralisation rate"), 
-               c(min(Mean - SE), max(Mean + SE)))
+               c(min(Mean - SE, na.rm = TRUE), max(Mean + SE, na.rm = TRUE)))
   
   blankDF <- data.frame(date = as.Date("2012-6-15"), 
                         variable = unique(data$variable),
@@ -240,15 +240,15 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
                                  rep(Nrng[2], 3), 0),
                         co2 = "amb")
   
-  # P max
-  Pmax <- with(subsetD(data, variable == "Net P mineralisation rate"), 
-               max(Mean + SE, na.rm = TRUE))
+  # P range
+  Prng <- with(subsetD(data, variable == "Net P mineralisation rate"), 
+               c(min(Mean - SE, na.rm = TRUE), max(Mean + SE, na.rm = TRUE)))
   
   # df for sub labels
   subLabDF <- with(data, 
                    data.frame(xv = as.Date("2012-6-15"),
                               variable = levels(variable),
-                              yv = c(rep(Nrng[2], 3), Pmax),
+                              yv = c(rep(Nrng[2], 3), Prng[2]),
                               labels = LETTERS[1:length(levels(variable))],
                               co2 = "amb"))
     # co2 is required as group = co2 is used in the main plot mapping
@@ -257,7 +257,7 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
   statDF <- StatPositionDF(StatRes = StatRes, 
                            variable = levels(data$variable), 
                            ytop = StatY,
-                           ymax = c(rep(Nrng[2], 3), Pmax))
+                           ylength = c(rep(diff(Nrng), 3), diff(Prng)))
   
   # creat a plot
   p <- ggplot(data, aes(x = date, y = Mean, group = co2))
@@ -300,16 +300,17 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
 ############################################
 # Create df to add a stat table to figures #
 ############################################
-StatPositionDF <- function(StatRes, variable, ytop, ymax){
-  d <- data.frame(variable, ytop, gap = 0.08 * ymax) 
-    # ytop is y coordinate for the top (i.e. CO2) of the table for each fig 
-    # (variable), ymax is the maximum value of the plot (i.e. max(mean+SE)).  
-    # 0.1 * ymax is used to determine the gap between each row of the table
-
+StatPositionDF <- function(StatRes, variable, ytop, ylength, gap = .07){
+  d <- data.frame(variable, ytop, gap = gap * ylength) 
+  # ytop is y coordinate for the top (i.e. CO2) of the table for each fig 
+  # (variable), ylength is the difference of max and min value of the plot (i.e.
+  # max(mean+SE) - min(mean-SE)). 0.1 * ylength is used to determine the gap between each row
+  # of the table
+  
   predictor <- levels(StatRes$predictor)
   
   # create df which contains variable, predictor and y coordinates for the other
-  # predictors (i.e. Time, CO2xTime) which is ymax*0.1 (= gap) lower than one above
+  # predictors (i.e. Time, CO2xTime) which is ylength*0.1 (= gap) lower than one above
   d2 <- ddply(d, .(variable),
               function(x){
                 data.frame(predictor, 
@@ -322,7 +323,6 @@ StatPositionDF <- function(StatRes, variable, ytop, ymax){
   d3$co2 <- "amb" # co2 column is required for ggplot
   return(d3)
 }
-
 ##############################
 # Save ggplot in PDF and PNG #
 ##############################
