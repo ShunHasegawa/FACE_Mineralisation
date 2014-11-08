@@ -165,6 +165,49 @@ PltCO2Mean <- function(data){
   }
 }
 
+################################
+# Return star based on P value #
+################################
+FormatPval <- function(Pval) {
+  stars <- ifelse(is.na(Pval), "ns",
+                  ifelse(Pval > .1, "ns",
+                         ifelse(Pval > .05, ".",
+                                ifelse(Pval > .01, "*",
+                                       ifelse(Pval > .001, "**",
+                                              c("***"))))))
+  
+  p <- as.character(ifelse(is.na(Pval), "ns",
+                           ifelse(Pval > .1, round(Pval, 3),
+                                  ifelse(Pval < .001, "bold('<0.001')", 
+                                         # shown with bold font. Note that
+                                         # inside of bold needs to be in ''
+                                         paste("bold(", round(Pval, 3), ")", sep = "'")
+                                  ))))
+  return(data.frame(stars, p))
+} 
+
+########################################
+# Create summary stat table from anova #
+########################################
+StatTable <- function(x, variable) { # x is anova result
+  df <- data.frame(predictor = c(row.names(x)),
+                   rbind(FormatPval(x$Pr)))
+  
+  # add a row for column name of the table in the fig 
+  df <- rbind(df, data.frame(predictor = "", 
+                             stars = "italic('P<F')", 
+                             p = "italic('P<F')"))
+  
+  result <- merge(df, data.frame(predictor = c("co2", "time", "co2:time")), all = TRUE)
+  
+  result$predictor <- factor(result$predictor, 
+                             labels = c("", "CO[2]", "Time", "CO[2]*~x~Time"), 
+                             levels = c("", "co2", "time", "co2:time"))
+  result$variable <- variable
+  result <- result[order(result$predictor), ]
+  return(result)
+}
+
 #######################
 # Fig for publication #
 #######################
@@ -177,7 +220,9 @@ science_theme <- theme(panel.grid.major = element_blank(),
                        legend.background = element_blank())
 
 # white-black figure
-WBFig <- function(data, ylab, figTheme = science_theme){
+WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
+  # StatRes -> Summary stat tables to put in the figures
+  # StatY -> y coordinate for the tables
     
   # Blank data frame: defining the constant y range for N related mineralisation
   # N range
@@ -203,6 +248,13 @@ WBFig <- function(data, ylab, figTheme = science_theme){
                               co2 = "amb"))
     # co2 is required as group = co2 is used in the main plot mapping
   
+  # df for stat table
+  statDF <- StatPositionDF(StatRes = StatRes, 
+                           variable = levels(data$variable), 
+                           ytop = StatY,
+                           ymax = c(rep(Nrng[2], 3), Pmax))
+  
+  # creat a plot
   p <- ggplot(data, aes(x = date, y = Mean, group = co2))
   
   p2 <- p + geom_line(aes(linetype = co2), position = position_dodge(20)) + 
@@ -227,10 +279,44 @@ WBFig <- function(data, ylab, figTheme = science_theme){
               data = subLabDF) +
     facet_wrap(~variable, scales= "free_y") +
     geom_blank(aes(x = date, y = Mean), data = blankDF) +
-    figTheme
+    figTheme + 
+    geom_text(data = subset(statDF, predictor != ""), aes(x = as.Date("2013-12-20"), 
+                                                    y = yval, label = predictor),
+              size = 2, hjust = 1, parse = TRUE) +
+    # unless remove "" with predictor != "", labels will be messed up due to
+    # this empty level
+    
+    geom_text(data = statDF, aes(x = as.Date("2014-2-20"), y = yval, label = p), 
+              size = 2, parse = TRUE)
   return(p2)
 }
 
+
+########################################
+# Create df to add an table to figures #
+########################################
+StatPositionDF <- function(StatRes, variable, ytop, ymax){
+  d <- data.frame(variable, ytop, gap = 0.08 * ymax) 
+    # ytop is y coordinate for the top (i.e. CO2) of the table for each fig 
+    # (variable), ymax is the maximum value of the plot (i.e. max(mean+SE)).  
+    # 0.1 * ymax is used to determine the gap between each row of the table
+
+  predictor <- levels(StatRes$predictor)
+  
+  # create df which contains variable, predictor and y coordinates for the other
+  # predictors (i.e. Time, CO2xTime) which is ymax*0.1 (= gap) lower than one above
+  d2 <- ddply(d, .(variable),
+              function(x){
+                data.frame(predictor, 
+                           ldply(1:length(predictor), function(z) x$ytop - z * x$gap))
+              })
+  names(d2)[3] <- "yval"
+  
+  # mege every thing
+  d3 <- merge(d2, StatRes, by = c("variable", "predictor"))
+  d3$co2 <- "amb" # co2 column is required for ggplot
+  return(d3)
+}
 
 ##############################
 # Save ggplot in PDF and PNG #
@@ -508,29 +594,3 @@ CrSheetAnvTbl <- function(workbook, sheetName, smmaryLst){
 ###############################
 source("R/rsquaredglmm.R")
 
-################################
-# Return star based on P value #
-################################
-PvalStar <- function(Pval) {
-  ifelse(Pval > .1, "",
-         ifelse(Pval > .05, ".",
-                ifelse(Pval > .01, "*",
-                       ifelse(Pval > .001, "**",
-                              "***"))))
-} 
-
-########################################
-# Create summary stat table from anova #
-########################################
-StatTable <- function(x, variable) { # x is anova result
-  df <- data.frame(predictor = row.names(x),
-                   Pval = round(x$Pr, 3),
-                   star = PvalStar(x$Pr))
-  result <- merge(df, data.frame(predictor = c("co2", "time", "co2:time")), all.y = TRUE)
-  result$predictor <- factor(result$predictor, 
-                             labels = c(expression(CO[2]), "Time", expression(CO[2]*xTime)), 
-                             levels = c("co2", "time", "co2:time"))
-  result$variable <- variable
-  result <- result[order(result$predictor), ]
-  return(result)
-}
