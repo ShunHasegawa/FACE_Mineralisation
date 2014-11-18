@@ -13,6 +13,9 @@ mineMlt$variable <- factor(mineMlt$variable,
                            levels = c("n.min", "nitrification", 
                                       "ammonification", "p.min"))
 
+# response ratio calculated for each block
+BlockRatio(mineMlt)
+
 # Ring summary table & mean
 RngSmmryTbl <- dlply(mineMlt, .(variable), 
                      function(x) CreateTable(x, fac = "ring", digit = 3, nsmall = 3))

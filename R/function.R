@@ -599,3 +599,12 @@ CrSheetAnvTbl <- function(workbook, sheetName, smmaryLst){
 ###############################
 source("R/rsquaredglmm.R")
 
+###############################
+# Compute block ratio (e-a)/a #
+###############################
+BlockRatio <- function(data){
+  Rmean <- ddply(data, .(date, time, block, ring, co2, variable), summarise, Mean = mean(value, na.rm = TRUE))
+  blockR <- ddply(Rmean, .(date, time, block, variable), summarise, R = Mean[co2 == "elev"]/Mean[co2 == "amb"]-1)
+  blockRMean <- ddply(blockR, .(date, time, variable), summarise, value = mean(R, na.rm = TRUE))
+  cast(blockRMean, date+time~variable)
+}
