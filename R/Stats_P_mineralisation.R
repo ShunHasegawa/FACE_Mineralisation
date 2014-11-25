@@ -49,7 +49,7 @@ cntrst<- contrast(LmeMod,
                   a = list(time = levels(NitRmOl$time), co2 = "amb"),
                   b = list(time = levels(NitRmOl$time), co2 = "elev"))
 
-FACE_Mine_P_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, digit = 2)
+FACE_Mine_P_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, variable = "p.min")
 
 FACE_Mine_P_CntrstDf
 

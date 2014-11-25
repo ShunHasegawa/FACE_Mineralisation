@@ -41,7 +41,7 @@ LmeMod <- lme(ammonification ~ co2 * time, random = ~1|block/ring/plot,
 cntrst<- contrast(LmeMod, 
                   a = list(time = levels(mine$time), co2 = "amb"),
                   b = list(time = levels(mine$time), co2 = "elev"))
-FACE_Mine_Amm_CntrstDf <- cntrstTbl(cntrst, data = mine, digit = 2)
+FACE_Mine_Amm_CntrstDf <- cntrstTbl(cntrst, data = mine, variable = "ammonification")
 
 FACE_Mine_Amm_CntrstDf
 

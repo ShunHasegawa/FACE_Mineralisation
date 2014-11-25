@@ -77,3 +77,16 @@ CO2TimeStatList <- list('Net nitrification rate' = AnvF_Nit_time,
 Stat_CO2Time <- ldply(names(CO2TimeStatList), 
                       function(x) StatTable(CO2TimeStatList[[x]], variable = x))
 save(Stat_CO2Time, file = "output//data/CO2Time_Stat.RData")
+
+########################
+## Result of contrast ##
+########################
+ContrastDF <- rbind.fill(list(
+  FACE_Mine_Amm_CntrstDf,
+  FACE_Mine_Nmin_CntrstDf,
+  FACE_Mine_Nit_CntrstDf,
+  FACE_Mine_P_CntrstDf
+  ))
+save(ContrastDF, file = "output//data/FACE_Mine_ContrastDF.RData")
+
+

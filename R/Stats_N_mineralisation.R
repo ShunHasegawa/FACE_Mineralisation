@@ -36,7 +36,7 @@ LmeMod <- lme(1/(n.min + .5) ~ co2 * time, random = ~1|block/ring/plot,
 cntrst<- contrast(LmeMod, 
                   a = list(time = levels(mine$time), co2 = "amb"),
                   b = list(time = levels(mine$time), co2 = "elev"))
-FACE_Mine_Nmin_CntrstDf <- cntrstTbl(cntrst, data = mine, digit = 2)
+FACE_Mine_Nmin_CntrstDf <- cntrstTbl(cntrst, data = mine, variable = "n.min")
 
 FACE_Mine_Nmin_CntrstDf
 

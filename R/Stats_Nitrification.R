@@ -41,7 +41,7 @@ LmeMod <- lme(nitrification ~ co2 * time, random = ~1|block/ring/plot, data = Ni
 cntrst<- contrast(LmeMod, 
                   a = list(time = levels(NitRmOl$time), co2 = "amb"),
                   b = list(time = levels(NitRmOl$time), co2 = "elev"))
-FACE_Mine_Nit_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, digit = 2)
+FACE_Mine_Nit_CntrstDf <- cntrstTbl(cntrst, data = NitRmOl, variable = "nitrification")
 
 FACE_Mine_Nit_CntrstDf
 
