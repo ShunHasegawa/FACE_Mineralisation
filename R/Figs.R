@@ -61,10 +61,33 @@ ggsavePP(filename = "output//figs/FACE_Mineralisation_CO2Trt", plot = pl,
 load("output/data/CO2Time_Stat.RData") 
   # Note if I need most updated summary, I need to run Stat.R first
 
+# load contrastDF to annotate stat result and combine with max values from
+# TrtMean as y position
+load("output//data/FACE_Mine_ContrastDF.RData")
+Antt_CntrstDF <- merge(ContrastDF, 
+                       ddply(TrtMean, .(date, variable), summarise, yval = max(Mean + SE)),
+                       # this return maximum values
+                       by = c("date", "variable"), all.x = TRUE)
+Antt_CntrstDF$co2 <- "amb" # co2 column is required as it's used for mapping
+Antt_CntrstDF <- subset(Antt_CntrstDF, stars != "") 
+  # remove empty rows as they causes trouble when using geom_text
+Antt_CntrstDF$variable <- factor(Antt_CntrstDF$variable, 
+                                 labels = c("Net ammonification rate",
+                                            "Net N mineralisation rate",
+                                            "Net nitrification rate",
+                                            "Net P mineralisation rate"),
+                                 levels = c("ammonification", "n.min", "nitrification", "p.min"))
+ # relabel variables
+
 p <- WBFig(data = plDF, 
            ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")),
            StatRes = Stat_CO2Time, 
-           StatY = c(.01, .01, .01, -0.003))
+           StatY = c(.01, .01, .01, -0.003)) +
+  geom_text(data = Antt_CntrstDF, 
+            aes(x = date, y = yval, label = stars), 
+            vjust = 0, parse = TRUE)
+p
+
 ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
          plot = p, width = 6, height = 5)
 
