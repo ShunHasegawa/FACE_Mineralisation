@@ -235,7 +235,7 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
   # Blank data frame: defining the constant y range for N related mineralisation
   # N range
   Nrng <- with(subsetD(data, variable != "Net P mineralisation rate"), 
-               c(min(Mean - SE, na.rm = TRUE), max(Mean + SE, na.rm = TRUE)))
+               c(min(Mean - SE, na.rm = TRUE), max(Mean + SE + 0.03, na.rm = TRUE)))
   
   blankDF <- data.frame(date = as.Date("2012-6-15"), 
                         variable = unique(data$variable),
