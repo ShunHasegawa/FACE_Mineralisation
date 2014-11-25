@@ -107,7 +107,7 @@ pl <- PltCO2Mean(subsetD(TrtMean, variable == "p.min")) +
   poster_theme +
   geom_text(data = subset(Antt_CntrstDF, variable == "Net P mineralisation rate"), 
             aes(x = date, y = yval, label = stars),
-            col = "black", vjust = 0, parse = TRUE)
+            col = "black", vjust = 0, parse = TRUE, size = 7)
 ggsavePP(filename = "output//figs/GSBI_Poster/FACE_CO2_P_Min", plot = pl, width = 6, height = 4)
 
 #######################
