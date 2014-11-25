@@ -20,24 +20,6 @@ TrtFg <- dlply(TrtMean, .(variable), PltCO2Mean)
 fls <- paste("output//figs/FACE_mineralisation_CO2_", vars, sep = "")
 l_ply(1:4, function(x) ggsavePP(filename = fls[x], plot = TrtFg[[x]], width = 6, height = 3))
 
-################
-## for poster ##
-################
-poster_theme <- theme(panel.grid.major = element_blank(),
-                      panel.grid.minor = element_blank(),
-                      axis.text.x = element_text(angle=45, vjust= 1, hjust = 1, 
-                                                 size = 13),
-                      legend.position = "non",
-                      axis.title.y = element_text(size = 15),
-                      plot.title = element_text(size = 25, face = "bold"))
-
-pl <- PltCO2Mean(subsetD(TrtMean, variable == "p.min")) +
-  ggtitle("Net P mineralisation rate") +
-  labs(x = NULL, y = expression((mg~kg^"-1"~d^"-1")))+
-  poster_theme
-ggsavePP(filename = "output//figs/GSBI_Poster/FACE_CO2_P_Min", plot = pl, width = 6, height = 4)
-
-
 ##################################
 # plot all nutrient in one graph #
 ##################################
@@ -107,6 +89,26 @@ p <- WBFig(data = plDF,
 
 ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
          plot = p, width = 6, height = 5)
+
+################
+## for poster ##
+################
+poster_theme <- theme(panel.grid.major = element_blank(),
+                      panel.grid.minor = element_blank(),
+                      axis.text.x = element_text(angle=45, vjust= 1, hjust = 1, 
+                                                 size = 13),
+                      legend.position = "non",
+                      axis.title.y = element_text(size = 15),
+                      plot.title = element_text(size = 25, face = "bold"))
+
+pl <- PltCO2Mean(subsetD(TrtMean, variable == "p.min")) +
+  ggtitle("Net P mineralisation rate") +
+  labs(x = NULL, y = expression((mg~kg^"-1"~d^"-1")))+
+  poster_theme +
+  geom_text(data = subset(Antt_CntrstDF, variable == "Net P mineralisation rate"), 
+            aes(x = date, y = yval, label = stars),
+            col = "black", vjust = 0, parse = TRUE)
+ggsavePP(filename = "output//figs/GSBI_Poster/FACE_CO2_P_Min", plot = pl, width = 6, height = 4)
 
 #######################
 # Plot soil variables #
