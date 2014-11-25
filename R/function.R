@@ -223,7 +223,7 @@ StatTable <- function(x, variable) { # x is anova result
 science_theme <- theme(panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(),
                        axis.text.x  = element_text(angle=45, vjust= 1, hjust = 1),
-                       legend.position = c(.2, .38), 
+                       legend.position = c(.35, .4), 
                        legend.title = element_blank(),
                        legend.background = element_blank())
 
