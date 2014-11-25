@@ -86,7 +86,6 @@ p <- WBFig(data = plDF,
   geom_text(data = Antt_CntrstDF, 
             aes(x = date, y = yval, label = stars), 
             vjust = 0, parse = TRUE)
-p
 
 ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
          plot = p, width = 6, height = 5)
