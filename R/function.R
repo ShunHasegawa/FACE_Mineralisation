@@ -128,9 +128,6 @@ PltMean <- function(data, ...){
                   position = position_dodge(10), 
                   alpha = .8) + 
     labs(x = "Month", y = ylab) +
-    geom_vline(xintercept = as.numeric(as.Date("2012-09-18")), 
-               linetype = "dashed", 
-               col = "black") +
     scale_x_date(breaks= date_breaks("2 month"),
                  labels = date_format("%b-%y"),
                  limits = as.Date(c("2012-6-15", "2014-4-2"))) +
