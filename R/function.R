@@ -117,7 +117,12 @@ PltMean <- function(data, ...){
   
   p <- ggplot(data, aes_string(x = "date", y = "Mean", ...))
   
-  p2 <- p + geom_line(size = 1.5, position = position_dodge(10), alpha = .8) + 
+  p2 <- p + 
+    geom_rect(xmin = -Inf, 
+              xmax = as.numeric(as.Date("2012-09-18")),
+              ymin = -Inf, ymax = Inf,
+              fill = "grey90", col = "grey90") +
+    geom_line(size = 1.5, position = position_dodge(10), alpha = .8) + 
     geom_errorbar(aes_string(ymin = "Mean - SE", ymax = "Mean + SE", ...), 
                   width = 20,
                   position = position_dodge(10), 
