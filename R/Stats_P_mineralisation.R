@@ -125,7 +125,7 @@ Rtr <- function(x) exp(x + .1)
 par(mfrow = c(1,2))
 l_ply(c("Moist", "Temp_Mean"), function(x){
   PltPrdVal(model = Fml_ancv, variable = x, 
-            trans = Rtr,
+#             trans = Rtr,
             data = postDF)
 })
 
@@ -182,6 +182,6 @@ Rtr <- function(x) exp(x + .1)
 par(mfrow = c(1,2))
 l_ply(c("Moist", "Temp_Mean"), function(x){
   PltPrdVal(model = Fml_ancv, variable = x, 
-            trans = Rtr,
+#             trans = Rtr,
             data = postDF)
 })
