@@ -5,7 +5,6 @@
 %% need to be loaded here if one wants to compile this child document to PDF %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 <<setup, include=FALSE>>=
 opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
 opts_knit$set(root.dir=normalizePath('../'))
@@ -31,7 +30,7 @@ load("output//data/postDF.RData")
 \end{figure}
 
 <<Table_FACE_CO2_Mine_N_min, echo=FALSE, results='asis'>>=
-printTbl(TrtSmmryTbl[[2]], 
+printTbl(TrtSmmryTbl[[1]], 
          caption = "CO2 trt mean of N mineralisation",
          label = "table:FACE_CO2_N_min")
 @
@@ -46,7 +45,7 @@ source("R/Stats_N_mineralisation.R")
 @
 
 \clearpage
-\paragraph{Stats}
+\subsection{Stats}
 \noindent
 
 %%%%%%%%%%%
@@ -56,7 +55,7 @@ source("R/Stats_N_mineralisation.R")
 <<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='markup'>>=
 @
 
-\paragraph{ANCOVA with soil variables}
+\subsubsection{ANCOVA with soil variables}
 \noindent
 <<Stat_FACE_Mine_N_min_withSoilvarSmmry, echo=TRUE, results='markup'>>=
 @
@@ -75,17 +74,13 @@ source("R/Stats_N_mineralisation.R")
 
 \begin{figure}[!h]\label{figure:RingN_min}
 \begin{center}
-
-<<Fig_FACE_Ring_Mine_N_min, echo=FALSE, fig.height=3, fig.width=6>>=
-RngFg[[2]]
-@
-
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_Ring_N_mineralisation.pdf}
 \caption{N mineralisation rates in each ring}
 \end{center}
 \end{figure}
 
 <<Table_FACE_Ring_Mine_N_min, echo=FALSE, results='asis'>>=
-printRngTbl(RngSmmryTbl[[2]], 
+printRngTbl(RngSmmryTbl[[1]], 
             caption = "Ring mean of N mineralisation", 
             label = "table:FACE_ring_N_min",
             size = "small")
