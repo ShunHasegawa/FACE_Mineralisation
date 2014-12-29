@@ -5,26 +5,32 @@
 %% need to be loaded here if one wants to compile this child document to PDF %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% <<setup, include=FALSE>>=
+% opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
+% opts_knit$set(root.dir=normalizePath('../'))
+% @
+% 
+% <<readFiles, include=FALSE>>=
+% source("R/pckg.R")
+% load("output//data/Allobj.RData")
+% load("output//data/postDF.RData")
+% @
 
-\subsection{Nitrification}
+\section{Nitrification}
 
 %%% CO2 trt %%%
-\subsubsection{CO$_2$ trt}
+\subsection{CO$_2$ trt}
 
 \begin{figure}[!h]\label{figure:CO2Nitrification}
 
 \begin{center}
-
-<<Fig_FACE_CO2_Mine_Nitrification, echo=FALSE, fig.height=3, fig.width=6>>=
-TrtFg[[1]]
-@
-
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_CO2_Nitrification.pdf}
 \caption{Nitrificaion rates at CO$_2$ treatments}
 \end{center}
 \end{figure}
 
 <<Table_FACE_CO2_Mine_Nitrification, echo=FALSE, results='asis'>>=
-printTbl(TrtSmmryTbl[[1]], 
+printTbl(TrtSmmryTbl[[2]], 
          caption = "CO2 trt mean of nitrification",
          label = "table:FACE_CO2_Nitrification")
 @
@@ -38,7 +44,7 @@ source("R/Stats_Nitrification.R")
 @
 
 \clearpage
-\paragraph{Stats}
+\subsection{Stats}
 \noindent
 
 %%%%%%%%%%%
@@ -47,7 +53,7 @@ source("R/Stats_Nitrification.R")
 <<Stat_FACE_Mine_NitrificationSmmry, echo=TRUE, results='markup'>>=
 @
 
-\paragraph{ANCOVA with soil variables}
+\subsubsection{ANCOVA with soil variables}
 \noindent
 <<Stat_FACE_Mine_Nitrification_withSoilvarSmmry, echo = TRUE, results='markup'>>=
 @
@@ -65,21 +71,17 @@ source("R/Stats_Nitrification.R")
 
 %%% Ring %%%
 \clearpage
-\subsubsection{Ring}
+\subsection{Ring}
 
 \begin{figure}[!h]\label{figure:RingNitrification}
 \begin{center}
-
-<<Fig_FACE_Ring_Mine_Nitrification, echo=FALSE, fig.height=3, fig.width=6>>=
-RngFg[[1]]
-@
-
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_Ring_Nitrification.pdf}
 \caption{Nitrification rates in each ring}
 \end{center}
 \end{figure}
 
 <<Table_FACE_Ring_Mine_Nitrification, echo=FALSE, results='asis'>>=
-printRngTbl(RngSmmryTbl[[1]], 
+printRngTbl(RngSmmryTbl[[2]], 
             caption = "Ring mean of nitrification", 
             label = "table:FACE_ring_Nitrification",
             size = "small")
