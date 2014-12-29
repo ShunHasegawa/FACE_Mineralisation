@@ -5,16 +5,16 @@
 %% need to be loaded here if one wants to compile this child document to PDF %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<setup, include=FALSE>>=
-opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
-opts_knit$set(root.dir=normalizePath('../'))
-@
-
-<<readFiles, include=FALSE>>=
-source("R/pckg.R")
-load("output//data/Allobj.RData")
-load("output//data/postDF.RData")
-@
+% <<setup, include=FALSE>>=
+% opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
+% opts_knit$set(root.dir=normalizePath('../'))
+% @
+% 
+% <<readFiles, include=FALSE>>=
+% source("R/pckg.R")
+% load("output//data/Allobj.RData")
+% load("output//data/postDF.RData")
+% @
 
 \section{N Mineralisation}
 

@@ -6,19 +6,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 
-\subsection{P mineralisation}
+\section{P mineralisation}
 
 %%% CO2 trt %%%
-\subsubsection{CO$_2$ trt}
+\subsection{CO$_2$ trt}
 
 \begin{figure}[!h]\label{figure:CO2P_min}
 
 \begin{center}
-
-<<Fig_FACE_CO2_Mine_P_min, echo=FALSE, fig.height=3, fig.width=6>>=
-TrtFg[[4]]
-@
-
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_CO2_P_minerlisation.pdf}
 \caption{P mineralisation rates at CO$_2$ treatments}
 \end{center}
 \end{figure}
@@ -36,7 +32,7 @@ source("R/Stats_P_mineralisation.R")
 @
 
 \clearpage
-\paragraph{Stats}
+\subsection{Stats}
 \noindent
 
 %%%%%%%%%%%
@@ -45,7 +41,7 @@ source("R/Stats_P_mineralisation.R")
 <<Stat_FACE_Mine_P_minSmmry, echo=TRUE, results='markup'>>=
 @
 
-\paragraph{ANCOVA with soil variables}
+\subsubsection{ANCOVA with soil variables}
 \noindent
 <<Stat_FACE_Mine_P_min_withSoilvarSmmry, echo=TRUE, results='markup'>>=
 @
@@ -60,15 +56,11 @@ source("R/Stats_P_mineralisation.R")
 
 %%% Ring %%%
 \clearpage
-\subsubsection{Ring}
+\subsection{Ring}
 
 \begin{figure}[!h]\label{figure:RingP_min}
 \begin{center}
-
-<<Fig_FACE_Ring_Mine_P_min, echo=FALSE, fig.height=3, fig.width=6>>=
-RngFg[[4]]
-@
-
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_Ring_P_minerlisation.pdf}
 \caption{P mineralisation rates in each ring}
 \end{center}
 \end{figure}
