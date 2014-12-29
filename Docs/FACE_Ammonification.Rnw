@@ -13,7 +13,7 @@
 \begin{figure}[!h]\label{figure:CO2Ammonification}
 
 \begin{center}
-\includegraphics[width=6in]{../output//figs/output//figs/FACE_mineralisation_CO2_Ammonification.pdf}
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_CO2_Ammonification.pdf}
 \caption{Ammonification rates at CO$_2$ treatments}
 \end{center}
 \end{figure}
@@ -63,7 +63,7 @@ source("R/Stats_Ammonification.R")
 
 \begin{figure}[!h]\label{figure:RingAmmonification}
 \begin{center}
-\includegraphics[width=6in]{../output//figs/output//figs/FACE_mineralisation_Ring_Ammonification.pdf}
+\includegraphics[width=6in]{../output/figs/FACE_mineralisation_Ring_Ammonification.pdf}
 \caption{Ammonificaiton rates in each ring}
 \end{center}
 \end{figure}
