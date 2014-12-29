@@ -3,6 +3,7 @@
 \usepackage{fullpage}
 \usepackage{pdfpages}
 \usepackage{float}
+\usepackage[hidelinks]{hyperref} % add link on the list of contetns
 
 \title{FACE N and P mineralisation results -Summary Stats-}
 \author{Shun Hasegawa}
@@ -15,17 +16,10 @@ opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = lis
 opts_knit$set(root.dir=normalizePath('../'))
 @
 
-
 <<readFiles, include=FALSE>>=
-.libPaths("packrat/lib/x86_64-w64-mingw32//3.1.1")
-# use packages from packrat library 
-
 source("R/pckg.R")
-source("R//function.R")
-load("output//data//FACE_mineralisation.RData")
+load("output//data/Allobj.RData")
 load("output//data/postDF.RData")
-source("R//SummaryExlTable.R")
-source("R//Figs.R")
 @
 
 \maketitle
@@ -37,12 +31,10 @@ source("R//Figs.R")
 %%%
 %%%
 
-\section{N and P mineralisation}
-
 %%%%%%%%%%%%%%%
 % summary fig %
 %%%%%%%%%%%%%%%
-\subsection{Summary results}
+\section{Summary results}
 \begin{center}
 \begin{figure}[!ht]\label{figure:FACE_Mineralisation_Allres}
 
@@ -81,6 +73,5 @@ source("R//Figs.R")
 %%%%%%%%%%%%%%%%
 \clearpage
 \listoffigures
-
 
 \end{document}
