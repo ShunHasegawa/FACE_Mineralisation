@@ -13,13 +13,10 @@ mineMlt$variable <- factor(mineMlt$variable,
                            levels = c("n.min", "nitrification", 
                                       "ammonification", "p.min"))
 
-# response ratio calculated for each block
-BlockRatio(mineMlt)
-
 # Ring summary table & mean
 RngSmmryTbl <- dlply(mineMlt, .(variable), 
                      function(x) CreateTable(x, fac = "ring", digit = 3, nsmall = 3))
-RngMean <- ddply(mineMlt, .(time, date, co2, ring, variable), summarise, value = mean(value, na.rm = TRUE)) 
+RngMean <- ddply(mineMlt, .(time, date, co2, ring, block, variable), summarise, value = mean(value, na.rm = TRUE)) 
 
 # treat summary table $ mean
 TrtSmmryTbl <- dlply(RngMean, .(variable), function(x) CreateTable(x, fac = "co2",  digit = 3, nsmall = 3, scientific = FALSE))
