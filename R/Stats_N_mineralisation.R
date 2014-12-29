@@ -54,6 +54,8 @@ scatterplotMatrix( ~ I(1/(n.min + .5))  + log(Moist) + Temp_Max + Temp_Min + Tem
 ## Analysis
 Iml_ancv <- lmer(I(1/(n.min + .5)) ~ co2 * (Moist + Temp_Mean) + 
                    (1|block) + (1|ring) + (1|id), data = postDF)
+Iml_ancv <- lmer(1/(n.min + .5) ~ co2 * (Moist + Temp_Mean) + 
+                   (1|block) + (1|ring) + (1|id), data = postDF)
 Anova(Iml_ancv)
 Fml_ancv <- stepLmer(Iml_ancv)
 Anova(Fml_ancv)
@@ -71,7 +73,7 @@ Rtr <- function(x) 1/x - .5
 
 par(mfrow = c(1,2))
 l_ply(c("Moist", "Temp_Mean"), function(x) 
-  PltPrdVal(model = Fml_ancv, variable = x, trans = Rtr, data = postDF)
+  PltPrdVal(model = Fml_ancv, variable = x, data = postDF)
 )
 
 #############
@@ -123,7 +125,7 @@ rsquared.glmm(Fml_ancv)
 Rtr <- function(x) 1/x - .5
 par(mfrow = c(1,2))
 l_ply(c("Moist", "Temp_Mean"), function(x) 
-  PltPrdVal(model = Fml_ancv, variable = x, trans = Rtr, data = postDF)
+  PltPrdVal(model = Fml_ancv, variable = x, data = postDF)
 )
 
 # 95 % CI for estimates

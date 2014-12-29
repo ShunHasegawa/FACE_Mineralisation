@@ -6,38 +6,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-% <<setup, include=FALSE>>=
-% opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
-% opts_knit$set(root.dir=normalizePath('../'))
-% @
-% 
-% 
-% <<readFiles, include=FALSE>>=
-% .libPaths("packrat/lib/x86_64-w64-mingw32//3.1.1")
-% # use packages from packrat library 
-% 
-% source("R/pckg.R")
-% source("R//function.R")
-% load("output//data//FACE_mineralisation.RData")
-% load("output//data/postDF.RData")
-% source("R//SummaryExlTable.R")
-% source("R//Figs.R")
-% @
+<<setup, include=FALSE>>=
+opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
+opts_knit$set(root.dir=normalizePath('../'))
+@
 
+<<readFiles, include=FALSE>>=
+source("R/pckg.R")
+load("output//data/Allobj.RData")
+load("output//data/postDF.RData")
+@
 
-\subsection{N Mineralisation}
+\section{N Mineralisation}
 
 %%% CO2 trt %%%
-\subsubsection{CO$_2$ trt}
+\subsection{CO$_2$ trt}
 
 \begin{figure}[!h]\label{figure:CO2N_min}
 
 \begin{center}
-
-<<Fig_FACE_CO2_Mine_N_min, echo=FALSE, fig.height=3, fig.width=6>>=
-TrtFg[[2]]
-@
-
+\includegraphics[width=6in]{../output//figs/FACE_mineralisation_CO2_N_mineralisation.pdf}
 \caption{N mineralisation rates at CO$_2$ treatments}
 \end{center}
 \end{figure}
@@ -83,7 +71,7 @@ source("R/Stats_N_mineralisation.R")
 
 %%% Ring %%%
 \clearpage
-\subsubsection{Ring}
+\subsection{Ring}
 
 \begin{figure}[!h]\label{figure:RingN_min}
 \begin{center}
