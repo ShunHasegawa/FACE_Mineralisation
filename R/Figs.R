@@ -79,16 +79,16 @@ Antt_CntrstDF$variable <- factor(Antt_CntrstDF$variable,
                                  levels = c("ammonification", "n.min", "nitrification", "p.min"))
  # relabel variables
 
-p <- WBFig(data = plDF, 
+p <- WBFig(data = subsetD(plDF, variable != "Net ammonification rate"), 
            ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")),
-           StatRes = Stat_CO2Time, 
-           StatY = c(.01, .01, .01, -0.003)) +
-  geom_text(data = Antt_CntrstDF, 
+           StatRes = subsetD(Stat_CO2Time, variable != "Net ammonification rate"), 
+           StatY = c(.13, .13, 0.001)) +
+  geom_text(data = subsetD(Antt_CntrstDF, variable != "Net ammonification rate"), 
             aes(x = date, y = yval, label = stars), 
-            vjust = 0, parse = TRUE)
-
+            vjust = 0, parse = TRUE) +
+  theme(legend.position = c(.35, .93))
 ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
-         plot = p, width = 6, height = 5)
+         plot = p, width = 6, height = 6)
 
 #######################
 # Plot soil variables #

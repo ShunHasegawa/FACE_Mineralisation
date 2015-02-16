@@ -259,8 +259,8 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
   
   blankDF <- data.frame(date = as.Date("2012-6-15"), 
                         variable = unique(data$variable),
-                        Mean = c(rep(Nrng[1], 3), 0,
-                                 rep(Nrng[2], 3), 0),
+                        Mean = c(rep(Nrng[1], 2), 0,
+                                 rep(Nrng[2], 2), 0),
                         co2 = "amb")
   
   # P range
@@ -271,7 +271,7 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
   subLabDF <- with(data, 
                    data.frame(xv = as.Date("2012-6-15"),
                               variable = levels(variable),
-                              yv = c(rep(Nrng[2], 3), Prng[2]),
+                              yv = c(rep(Nrng[2], 2), Prng[2]),
                               labels = LETTERS[1:length(levels(variable))],
                               co2 = "amb"))
     # co2 is required as group = co2 is used in the main plot mapping
@@ -280,7 +280,7 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
   statDF <- StatPositionDF(StatRes = StatRes, 
                            variable = levels(data$variable), 
                            ytop = StatY,
-                           ylength = c(rep(diff(Nrng), 3), diff(Prng)))
+                           ylength = c(rep(diff(Nrng), 2), diff(Prng)))
   
   # creat a plot
   p <- ggplot(data, aes(x = date, y = Mean, group = co2))
@@ -305,11 +305,11 @@ WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
     geom_text(aes(x = xv, y = yv * .95, label = labels),
               fontface = "bold",
               data = subLabDF) +
-    facet_wrap(~variable, scales= "free_y") +
+    facet_grid(variable ~., scales= "free_y") +
     geom_blank(aes(x = date, y = Mean), data = blankDF) +
     figTheme + 
-    geom_text(data = subset(statDF, predictor != ""), aes(x = as.Date("2013-12-20"), 
-                                                    y = yval, label = predictor),
+    geom_text(data = subset(statDF, predictor != ""), 
+              aes(x = as.Date("2014-1-20"), y = yval, label = predictor),
               size = 2, hjust = 1, parse = TRUE) +
     # unless remove "" with predictor != "", labels will be messed up due to
     # this empty level
