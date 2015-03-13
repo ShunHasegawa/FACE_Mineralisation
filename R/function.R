@@ -243,7 +243,9 @@ science_theme <- theme(panel.grid.major = element_blank(),
                        axis.text.x  = element_text(angle=45, vjust= 1, hjust = 1),
                        legend.position = c(.35, .4), 
                        legend.title = element_blank(),
-                       legend.background = element_blank())
+                       legend.background = element_blank(),
+                       legend.key = element_blank(),
+                       legend.key.width = unit(2, "lines"))
 
 # white-black figure
 WBFig <- function(data, ylab, figTheme = science_theme, StatRes, StatY){
