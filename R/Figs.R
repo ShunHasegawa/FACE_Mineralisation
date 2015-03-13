@@ -86,7 +86,7 @@ p <- WBFig(data = subsetD(plDF, variable != "Net ammonification rate"),
   geom_text(data = subsetD(Antt_CntrstDF, variable != "Net ammonification rate"), 
             aes(x = date, y = yval, label = stars), 
             vjust = 0, parse = TRUE) +
-  theme(legend.position = c(.35, .93))
+  theme(legend.position = c(.35, .95))
 ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
          plot = p, width = 6, height = 6)
 
