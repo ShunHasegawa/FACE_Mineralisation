@@ -82,7 +82,7 @@ Antt_CntrstDF$variable <- factor(Antt_CntrstDF$variable,
 p <- WBFig(data = subsetD(plDF, variable != "Net ammonification rate"), 
            ylab = expression(Mineralisation~rate~(mg~kg^"-1"~d^"-1")),
            StatRes = subsetD(Stat_CO2Time, variable != "Net ammonification rate"), 
-           StatY = c(.13, .13, 0.001)) +
+           StatY = c(.17, .17, 0.006)) +
   geom_text(data = subsetD(Antt_CntrstDF, variable != "Net ammonification rate"), 
             aes(x = date, y = yval, label = stars), 
             vjust = 0, parse = TRUE) +
