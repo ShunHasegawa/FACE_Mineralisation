@@ -88,7 +88,7 @@ p <- WBFig(data = subsetD(plDF, variable != "Net ammonification rate"),
             vjust = 0, parse = TRUE) +
   theme(legend.position = c(.35, .95))
 ggsavePP(filename = "output//figs//FACE_Manuscript/FACE_Mineralisation", 
-         plot = p, width = 6, height = 6)
+         plot = p, width = 6.5, height = 6.5)
 
 #######################
 # Plot soil variables #
