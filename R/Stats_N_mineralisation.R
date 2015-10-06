@@ -1,42 +1,52 @@
-## ----Stat_FACE_Mine_N_min
+## ----Stat_FACE_Mine_N_min_preCO2
+boxplot(n.min ~ co2, data = subset(mine, time == 1))
+Iml_pre_nmin <- lmer(n.min ~ co2 + (1|block) + (1|ring), 
+                     data = mine, 
+                     subset = time == 1)
+Anova(Iml_pre_nmin, test.statistic = "F")
+summary(Iml_pre_nmin)
 
-range(mine$n.min)
+plot(Iml_pre_nmin)
+qqnorm(residuals(Iml_pre_nmin))
+qqline(residuals(Iml_pre_nmin))
 
-bxplts(value= "n.min", ofst= .5, data= mine)
+## ----Stat_FACE_Mine_N_min_postCO2
+
+range(postDF$n.min)
+
+bxplts(value= "n.min", ofst= .5, data= postDF)
   # inverse looks slightly better
 
 # the inital model
-Iml <- lmer(1/(n.min + .5) ~ co2 * time + (1|block) + (1|ring) + (1|id),
-            data = mine)
+Iml_post_nmin <- lmer(log(n.min + .5) ~ co2 * time + (1|block) + (1|ring) + (1|id), 
+                      data = postDF)
 
-Anova(Iml)
-# marginally significant interactive effect so keep it
+Anova(Iml_post_nmin)
+Anova(Iml_post_nmin, test.statistic = "F")
 
-# The final model
-Fml <- Iml
-Anova(Fml)
-AnvF_Nmin_time <- Anova(Fml, test.statistic = "F")
-
-summary(Fml)
+# Model simplification
+Fml_post_nmin <- stepLmer(Iml_post_nmin, alpha.fixed = .1)
+Anova(Fml_post_nmin)
+AnvF_Nmin_time <- Anova(Fml_post_nmin, test.statistic = "F")
+AnvF_Nmin_time
+summary(Fml_post_nmin)
 
 # model diagnosis
-plot(Fml)
-  # little wedge-shaped
-qqnorm(residuals(Fml))
-qqline(residuals(Fml))
-  # not very great...
+plot(Fml_post_nmin)
+qqnorm(residuals(Fml_post_nmin))
+qqline(residuals(Fml_post_nmin))
 
 ############
 # Contrast #
 ############
 # Note that contrast doesn't work with lmer so use lme
-LmeMod <- lme(1/(n.min + .5) ~ co2 * time, random = ~1|block/ring/plot,
-              data = mine)
+LmeMod <- lme(log(n.min + .5) ~ co2 * time, random = ~1|block/ring/plot, 
+              data = postDF)
 
 cntrst<- contrast(LmeMod, 
-                  a = list(time = levels(mine$time), co2 = "amb"),
-                  b = list(time = levels(mine$time), co2 = "elev"))
-FACE_Mine_Nmin_CntrstDf <- cntrstTbl(cntrst, data = mine, variable = "n.min")
+                  a = list(time = levels(postDF$time), co2 = "amb"),
+                  b = list(time = levels(postDF$time), co2 = "elev"))
+FACE_Mine_Nmin_CntrstDf <- cntrstTbl(cntrst, data = postDF, variable = "n.min")
 
 FACE_Mine_Nmin_CntrstDf
 
@@ -46,40 +56,36 @@ FACE_Mine_Nmin_CntrstDf
 # ANCOVA #
 ##########
 ## plot all variables
-scatterplotMatrix( ~ I(1/(n.min + .5))  + Moist + Temp_Max + Temp_Min + Temp_Mean,
+scatterplotMatrix( ~ log(n.min + .5)  + Moist + Temp_Max + Temp_Min + Temp_Mean,
                    data = postDF, diag = "boxplot")
-scatterplotMatrix( ~ I(1/(n.min + .5))  + log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
+scatterplotMatrix( ~ log(n.min + .5)  + log(Moist) + Temp_Max + Temp_Min + Temp_Mean,
                    data = postDF, diag = "boxplot")
 
 ## Analysis
-Iml_ancv <- lmer(I(1/(n.min + .5)) ~ co2 * (Moist + Temp_Mean) + 
-                   (1|block) + (1|ring) + (1|id), data = postDF)
-Iml_ancv <- lmer(1/(n.min + .5) ~ co2 * (Moist + Temp_Mean) + 
-                   (1|block) + (1|ring) + (1|id), data = postDF)
-Anova(Iml_ancv)
-Fml_ancv <- stepLmer(Iml_ancv)
-Anova(Fml_ancv)
-AnvF_Nmin <- Anova(Fml_ancv, test.statistic = "F")
+postDF$logMoist <- log(postDF$Moist)
+Iml_ancv_nmin <- lmer(log(n.min + .5) ~ co2 * (logMoist + Temp_Mean) + 
+                        (1|block) + (1|ring) + (1|id), data = postDF)
+Anova(Iml_ancv_nmin)
+Fml_ancv_nmin <- stepLmer(Iml_ancv_nmin, alpha.fixed = .1)
+Anova(Fml_ancv_nmin)
+AnvF_Nmin <- Anova(Fml_ancv_nmin, test.statistic = "F")
 AnvF_Nmin
-plot(Fml_ancv)
-qqnorm(resid(Fml_ancv))
-qqline(resid(Fml_ancv))
+plot(Fml_ancv_nmin)
+qqnorm(resid(Fml_ancv_nmin))
+qqline(resid(Fml_ancv_nmin))
 
 ##########################
 ## plot predicted value ##
 ##########################
-# back transformation
-Rtr <- function(x) 1/x - .5
-
 par(mfrow = c(1,2))
-l_ply(c("Moist", "Temp_Mean"), function(x) 
-  PltPrdVal(model = Fml_ancv, variable = x, data = postDF)
+l_ply(c("logMoist", "Temp_Mean"), function(x) 
+  PltPrdVal(model = Fml_ancv_nmin, variable = x, data = postDF)
 )
 
 #############
 ## 95 % CI ##
 #############
-ciDF <- CIdf(model = Fml_ancv)
+ciDF <- CIdf(model = Fml_ancv_nmin)
 
 Est.val <- ciDF
 
@@ -87,16 +93,20 @@ Est.val <- ciDF
 Est_Nmin <- ANCV_Tbl(Est.val)
 
 
-## ----Stat_FACE_Mine_N_minSmmry
+## ----Stat_FACE_Mine_N_minSmmry_preCO2
+Iml_pre_nmin@call
+Anova(Iml_pre_nmin, test.statistic = "F")
+
+## ----Stat_FACE_Mine_N_minSmmry_postCO2
 # The starting model is:
-Iml@call
-Anova(Iml)
+Iml_post_nmin@call
+Anova(Iml_post_nmin)
 
 # The final model is:
-Fml@call
+Fml_post_nmin@call
 
 # Chi-squre
-Anova(Fml)
+Anova(Fml_post_nmin)
 
 # F test
 AnvF_Nmin_time
@@ -106,27 +116,26 @@ FACE_Mine_Nmin_CntrstDf
 
 ## ----Stat_FACE_Mine_N_min_withSoilvarSmmry
 # The initial model:
-Iml_ancv@call
-Anova(Iml_ancv)
+Iml_ancv_nmin@call
+Anova(Iml_ancv_nmin)
 
 # The final model is:
-Fml_ancv@call
+Fml_ancv_nmin@call
 
 # Chi-square
-Anova(Fml_ancv)
+Anova(Fml_ancv_nmin)
 
 # F test
 AnvF_Nmin
 
 # squared R
-rsquared.glmm(Fml_ancv)
+rsquared.glmm(Fml_ancv_nmin)
 
 # Plot predicted values
-Rtr <- function(x) 1/x - .5
 par(mfrow = c(1,2))
-l_ply(c("Moist", "Temp_Mean"), function(x) 
-  PltPrdVal(model = Fml_ancv, variable = x, data = postDF)
+l_ply(c("logMoist", "Temp_Mean"), function(x) 
+  PltPrdVal(model = Fml_ancv_nmin, variable = x, data = postDF)
 )
 
 # 95 % CI for estimates
-Est.val
+Est_Nmin
