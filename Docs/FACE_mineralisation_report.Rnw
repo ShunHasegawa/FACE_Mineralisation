@@ -19,7 +19,6 @@ opts_knit$set(root.dir=normalizePath('../'))
 <<readFiles, include=FALSE>>=
 source("R/pckg.R")
 load("output//data/Allobj.RData")
-load("output//data/postDF.RData")
 @
 
 \maketitle
@@ -56,11 +55,11 @@ load("output//data/postDF.RData")
 \clearpage
 \Sexpr{knit_child('FACE_N_mineralisation.Rnw')}
 
-%%%%%%%%%%%%%%%%%%
-% Ammonification %
-%%%%%%%%%%%%%%%%%%
-\clearpage
-\Sexpr{knit_child('FACE_Ammonification.Rnw')}
+% %%%%%%%%%%%%%%%%%%
+% % Ammonification %
+% %%%%%%%%%%%%%%%%%%
+% \clearpage
+% \Sexpr{knit_child('FACE_Ammonification.Rnw')}
 
 %%%%%%%%%%%%%%%%%%%%
 % P mineralisation %

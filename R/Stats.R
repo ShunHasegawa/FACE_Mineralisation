@@ -35,7 +35,7 @@ source("R/Stats_N_mineralisation.R")
 ##################
 # Ammonification #
 ##################
-source("R/Stats_Ammonification.R")
+# source("R/Stats_Ammonification.R")
 
 ####################
 # P mineralisation #
@@ -70,7 +70,7 @@ saveWorkbook(wb, "output//table/FACE_Minerlisation_Ancv.xlsx")
 
 # create stat summary table for LMM with CO2 and time
 CO2TimeStatList <- list('Net nitrification rate' = AnvF_Nit_time, 
-                        'Net ammonification rate' = AnvF_Amm_time, 
+                        # 'Net ammonification rate' = AnvF_Amm_time, 
                         'Net N mineralisation rate' = AnvF_Nmin_time, 
                         'Net P mineralisation rate' = AnvF_Pmin_time)
 
@@ -82,11 +82,8 @@ save(Stat_CO2Time, file = "output//data/CO2Time_Stat.RData")
 ## Result of contrast ##
 ########################
 ContrastDF <- rbind.fill(list(
-  FACE_Mine_Amm_CntrstDf,
+  # FACE_Mine_Amm_CntrstDf,
   FACE_Mine_Nmin_CntrstDf,
-  FACE_Mine_Nit_CntrstDf,
-  FACE_Mine_P_CntrstDf
+  FACE_Mine_Nit_CntrstDf
   ))
 save(ContrastDF, file = "output//data/FACE_Mine_ContrastDF.RData")
-
-

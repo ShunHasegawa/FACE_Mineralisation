@@ -5,16 +5,15 @@
 %% need to be loaded here if one wants to compile this child document to PDF %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% <<setup, include=FALSE>>=
-% opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
-% opts_knit$set(root.dir=normalizePath('../'))
-% @
-% 
-% <<readFiles, include=FALSE>>=
-% source("R/pckg.R")
-% load("output//data/Allobj.RData")
-% load("output//data/postDF.RData")
-% @
+%' <<setup, include=FALSE>>=
+%' opts_chunk$set(concordance = TRUE, warning = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 60))
+%' opts_knit$set(root.dir=normalizePath('../'))
+%' @
+%' 
+%' <<readFiles, include=FALSE>>=
+%' source("R/pckg.R")
+%' load("output//data/Allobj.RData")
+%' @
 
 \section{N Mineralisation}
 
@@ -38,26 +37,32 @@ printTbl(TrtSmmryTbl[[1]],
 %%%%%%%%%%%
 %% Stats %%
 %%%%%%%%%%%
+\clearpage
+\subsection{Stats}
 
 <<ReadScript_FACE_Mine_N_min, echo=FALSE, cache=FALSE, include=FALSE>>=
 read_chunk('R/Stats_N_mineralisation.R')
-source("R/Stats_N_mineralisation.R")
 @
 
-\clearpage
-\subsection{Stats}
-\noindent
 
 %%%%%%%%%%%
 % Summary %
 %%%%%%%%%%%
 
-<<Stat_FACE_Mine_N_minSmmry, echo=TRUE, results='markup'>>=
+\subsubsection{Pre-CO$_2$}
+\noindent
+<<Stat_FACE_Mine_N_minSmmry_preCO2, echo=TRUE, results='markup'>>=
+@
+
+
+\subsubsection{Post-CO$_2$}
+\noindent
+<<Stat_FACE_Mine_N_minSmmry_postCO2, echo=TRUE, results='markup'>>=
 @
 
 \subsubsection{ANCOVA with soil variables}
 \noindent
-<<Stat_FACE_Mine_N_min_withSoilvarSmmry, echo=TRUE, results='markup'>>=
+<<Stat_FACE_Mine_N_min_withSoilvarSmmry, echo=TRUE, results='markup', fig.show='asis', fig.width = 6, fig.height = 4>>=
 @
 
 %%%%%%%%%%
