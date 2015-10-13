@@ -86,4 +86,12 @@ ContrastDF <- rbind.fill(list(
   FACE_Mine_Nmin_CntrstDf,
   FACE_Mine_Nit_CntrstDf
   ))
+
+# Add pre-co2 P val for P mineralisation 
+ContrastDF <- rbind.fill(ContrastDF,
+                         data.frame(date = as.Date("2012-07-24"), 
+                                    time = 1,
+                                    stars = "scriptstyle('\u2020')", 
+                                    p = "bold('0.089')", 
+                                    variable = "p.min"))
 save(ContrastDF, file = "output//data/FACE_Mine_ContrastDF.RData")
